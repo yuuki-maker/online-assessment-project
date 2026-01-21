@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEO設定 | KAIMAX Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: { 900: '#0A0F1C', 800: '#0F172A', 700: '#1E293B', 600: '#334155' },
+            gold: { 400: '#E5C158', 500: '#C9A227', 600: '#A88A1F' },
+            cream: { 50: '#FEFDFB', 100: '#FBF9F3', 200: '#F5F0E5' }
+          },
+          fontFamily: { 'display': ['Cormorant Garamond', 'serif'], 'sans': ['Noto Sans JP', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-gray-100 text-navy-800 antialiased">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-navy-900 flex-shrink-0">
+      <div class="p-6">
+        <a href="../public/top.html" class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+            <span class="font-display text-navy-900 text-xl font-bold">K</span>
+          </div>
+          <div>
+            <span class="font-display text-xl text-white tracking-wide block">KAIMAX</span>
+            <span class="text-xs text-gold-400">Admin</span>
+          </div>
+        </a>
+      </div>
+      <nav class="px-4 py-6 space-y-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          <span>ダッシュボード</span>
+        </a>
+        <div class="pt-4">
+          <div class="text-xs text-gray-500 px-4 mb-2 uppercase tracking-wider">設定・レポート</div>
+          <a href="settings.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/10 text-gold-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span class="font-medium">設定</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+      <header class="bg-white border-b border-gray-200 px-8 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <a href="settings.html" class="text-navy-500 hover:text-navy-700">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </a>
+            <h1 class="text-xl font-bold text-navy-800">SEO設定</h1>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-navy-800 flex items-center justify-center">
+              <span class="text-gold-400 font-semibold">管</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="flex-1 p-8 overflow-auto">
+        <!-- Settings Navigation -->
+        <div class="bg-white rounded-2xl shadow-sm mb-6">
+          <div class="flex border-b border-gray-100">
+            <a href="settings-fees.html" class="px-6 py-4 text-sm font-medium text-navy-500 hover:text-navy-700">手数料設定</a>
+            <a href="settings-categories.html" class="px-6 py-4 text-sm font-medium text-navy-500 hover:text-navy-700">カテゴリ管理</a>
+            <a href="settings-conditions.html" class="px-6 py-4 text-sm font-medium text-navy-500 hover:text-navy-700">商品状態管理</a>
+            <a href="settings-seo.html" class="px-6 py-4 text-sm font-medium text-gold-600 border-b-2 border-gold-500">SEO設定</a>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-6">
+          <!-- Global Meta Tags -->
+          <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+            <div class="p-6 border-b border-gray-100">
+              <h3 class="font-bold text-navy-800">グローバルメタタグ</h3>
+              <p class="text-sm text-navy-500 mt-1">サイト全体に適用されるメタ情報</p>
+            </div>
+            <div class="p-6 space-y-6">
+              <div>
+                <label class="block text-sm font-medium text-navy-700 mb-2">サイトタイトル</label>
+                <input type="text" value="KAIMAX - 高級ブランド品の買取査定プラットフォーム" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none text-sm">
+                <div class="text-xs text-navy-400 mt-2">60文字以内推奨（現在: 28文字）</div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-navy-700 mb-2">メタディスクリプション</label>
+                <textarea rows="3" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none text-sm resize-none">KAIMAXは、ブランドバッグ・腕時計・ジュエリーなどの高級品を全国の質屋に一括査定できるプラットフォームです。最高額で売却できます。</textarea>
+                <div class="text-xs text-navy-400 mt-2">160文字以内推奨（現在: 82文字）</div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-navy-700 mb-2">キーワード</label>
+                <input type="text" value="ブランド買取, 質屋, 一括査定, 高額買取, ルイヴィトン, ロレックス" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none text-sm">
+              </div>
+            </div>
+          </div>
+
+          <!-- OGP Settings -->
+          <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+            <div class="p-6 border-b border-gray-100">
+              <h3 class="font-bold text-navy-800">OGP設定</h3>
+              <p class="text-sm text-navy-500 mt-1">SNSシェア時の表示設定</p>
+            </div>
+            <div class="p-6 space-y-6">
+              <div>
+                <label class="block text-sm font-medium text-navy-700 mb-2">OGタイトル</label>
+                <input type="text" value="KAIMAX - 高級ブランド品を最高額で売却" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none text-sm">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-navy-700 mb-2">OGディスクリプション</label>
+                <textarea rows="2" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none text-sm resize-none">全国500社以上の質屋に一括査定。最高額を提示した質屋に売却できます。</textarea>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-navy-700 mb-2">OG画像</label>
+                <div class="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center">
+                  <div class="w-full h-32 bg-gray-100 rounded-lg mb-4 flex items-center justify-center">
+                    <svg class="w-12 h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                  </div>
+                  <button class="text-gold-600 hover:text-gold-700 text-sm font-medium">画像をアップロード</button>
+                  <p class="text-xs text-navy-400 mt-2">推奨サイズ: 1200 x 630px</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sitemap Settings -->
+          <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+            <div class="p-6 border-b border-gray-100">
+              <h3 class="font-bold text-navy-800">サイトマップ設定</h3>
+              <p class="text-sm text-navy-500 mt-1">検索エンジン向けのサイトマップ生成</p>
+            </div>
+            <div class="p-6 space-y-6">
+              <div class="flex items-center justify-between p-4 bg-cream-50 rounded-xl">
+                <div>
+                  <div class="font-medium text-navy-800">自動生成</div>
+                  <div class="text-sm text-navy-500">サイトマップを自動的に生成・更新</div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" checked class="sr-only peer">
+                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-gold-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gold-500"></div>
+                </label>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-navy-700 mb-2">更新頻度</label>
+                <select class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 outline-none text-sm">
+                  <option value="hourly">毎時</option>
+                  <option value="daily" selected>毎日</option>
+                  <option value="weekly">毎週</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-navy-700 mb-2">サイトマップURL</label>
+                <div class="flex items-center gap-2">
+                  <input type="text" value="https://kaimax.jp/sitemap.xml" readonly class="flex-1 px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-sm text-navy-500">
+                  <button class="px-4 py-3 border border-gray-200 text-navy-600 rounded-xl text-sm hover:bg-gray-50">コピー</button>
+                </div>
+              </div>
+              <button class="w-full px-4 py-3 border border-gold-400 text-gold-600 rounded-xl font-medium text-sm hover:bg-gold-50">サイトマップを再生成</button>
+            </div>
+          </div>
+
+          <!-- Robots.txt Settings -->
+          <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+            <div class="p-6 border-b border-gray-100">
+              <h3 class="font-bold text-navy-800">robots.txt設定</h3>
+              <p class="text-sm text-navy-500 mt-1">クローラーのアクセス制御</p>
+            </div>
+            <div class="p-6 space-y-6">
+              <div>
+                <label class="block text-sm font-medium text-navy-700 mb-2">robots.txt内容</label>
+                <textarea rows="8" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none text-sm font-mono resize-none">User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /mypage/
+
+Sitemap: https://kaimax.jp/sitemap.xml</textarea>
+              </div>
+              <div class="flex items-center gap-4">
+                <button class="flex-1 px-4 py-3 border border-gray-200 text-navy-600 rounded-xl font-medium text-sm hover:bg-gray-50">テスト</button>
+                <button class="flex-1 px-4 py-3 bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 rounded-xl font-semibold text-sm">保存</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Page-specific SEO -->
+        <div class="bg-white rounded-2xl shadow-sm mt-6 overflow-hidden">
+          <div class="p-6 border-b border-gray-100">
+            <h3 class="font-bold text-navy-800">ページ別SEO設定</h3>
+            <p class="text-sm text-navy-500 mt-1">主要ページごとのメタ情報をカスタマイズ</p>
+          </div>
+          <div class="divide-y divide-gray-50">
+            <div class="p-6 hover:bg-gray-50">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="font-medium text-navy-800">トップページ</div>
+                  <div class="text-sm text-navy-500">/</div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">設定済み</span>
+                  <button class="text-gold-600 hover:text-gold-700 text-sm font-medium">編集</button>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 hover:bg-gray-50">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="font-medium text-navy-800">商品一覧</div>
+                  <div class="text-sm text-navy-500">/items</div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">設定済み</span>
+                  <button class="text-gold-600 hover:text-gold-700 text-sm font-medium">編集</button>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 hover:bg-gray-50">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="font-medium text-navy-800">質屋一覧</div>
+                  <div class="text-sm text-navy-500">/pawnshops</div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">未設定</span>
+                  <button class="text-gold-600 hover:text-gold-700 text-sm font-medium">編集</button>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 hover:bg-gray-50">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="font-medium text-navy-800">利用ガイド</div>
+                  <div class="text-sm text-navy-500">/guide</div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">設定済み</span>
+                  <button class="text-gold-600 hover:text-gold-700 text-sm font-medium">編集</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-end gap-4 mt-6">
+          <button class="px-6 py-3 border border-gray-200 text-navy-600 rounded-xl font-medium hover:bg-gray-50">変更を破棄</button>
+          <button class="px-6 py-3 bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 rounded-xl font-semibold">すべて保存</button>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

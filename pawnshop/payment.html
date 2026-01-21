@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お支払い | KAIMAX 質屋</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              900: '#0A0F1C',
+              800: '#0F172A',
+              700: '#1E293B',
+              600: '#334155',
+            },
+            gold: {
+              400: '#E5C158',
+              500: '#C9A227',
+              600: '#A88A1F',
+            },
+            cream: {
+              50: '#FEFDFB',
+              100: '#FBF9F3',
+              200: '#F5F0E5',
+            }
+          },
+          fontFamily: {
+            'display': ['Cormorant Garamond', 'Noto Serif JP', 'serif'],
+            'sans': ['Noto Sans JP', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-cream-50 text-navy-800 antialiased">
+  <!-- Header -->
+  <header class="bg-navy-900 border-b border-gold-500/20">
+    <nav class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="../public/top.html" class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+            <span class="font-display text-navy-900 text-xl font-bold">K</span>
+          </div>
+          <span class="font-display text-2xl text-white tracking-wide">KAIMAX</span>
+          <span class="text-xs text-cream-300 bg-white/10 px-2 py-1 rounded">質屋</span>
+        </a>
+
+        <div class="flex items-center gap-2">
+          <div class="w-10 h-10 rounded-full bg-navy-700 flex items-center justify-center">
+            <span class="text-gold-400 font-semibold">鈴</span>
+          </div>
+          <span class="text-cream-100 text-sm hidden md:block">鈴木質店</span>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-6 py-8">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-sm text-navy-500 mb-6">
+      <a href="transactions.html" class="hover:text-gold-600">取引一覧</a>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+      <span class="text-navy-800">お支払い</span>
+    </nav>
+
+    <!-- Payment Deadline Alert -->
+    <div class="bg-red-50 border border-red-200 rounded-2xl p-4 mb-6 flex items-center gap-4">
+      <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+      </div>
+      <div>
+        <div class="font-semibold text-red-800">お支払い期限</div>
+        <div class="text-red-600">本日 18:00 まで（残り5時間32分）</div>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-5 gap-6">
+      <!-- Payment Form -->
+      <div class="md:col-span-3">
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+          <h1 class="text-xl font-bold text-navy-800 mb-6">お支払い方法</h1>
+
+          <!-- Payment Methods -->
+          <div class="space-y-4 mb-6">
+            <label class="block">
+              <input type="radio" name="payment" value="card" class="peer sr-only" checked>
+              <div class="p-4 border-2 border-gray-200 rounded-xl cursor-pointer peer-checked:border-gold-500 peer-checked:bg-gold-50 transition-all">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center peer-checked:bg-gold-100">
+                    <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-semibold text-navy-800">クレジットカード</p>
+                    <p class="text-sm text-navy-500">VISA, Mastercard, JCB, AMEX</p>
+                  </div>
+                </div>
+              </div>
+            </label>
+
+            <label class="block">
+              <input type="radio" name="payment" value="bank" class="peer sr-only">
+              <div class="p-4 border-2 border-gray-200 rounded-xl cursor-pointer peer-checked:border-gold-500 peer-checked:bg-gold-50 transition-all">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-semibold text-navy-800">銀行振込</p>
+                    <p class="text-sm text-navy-500">振込確認まで1〜2営業日</p>
+                  </div>
+                </div>
+              </div>
+            </label>
+          </div>
+
+          <!-- Card Form -->
+          <div class="border-t border-gray-100 pt-6">
+            <h3 class="font-semibold text-navy-800 mb-4">カード情報</h3>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-navy-700 mb-2">カード番号</label>
+                <input
+                  type="text"
+                  placeholder="1234 5678 9012 3456"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all outline-none"
+                >
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-navy-700 mb-2">有効期限</label>
+                  <input
+                    type="text"
+                    placeholder="MM/YY"
+                    class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all outline-none"
+                  >
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-navy-700 mb-2">セキュリティコード</label>
+                  <input
+                    type="text"
+                    placeholder="123"
+                    class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all outline-none"
+                  >
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-navy-700 mb-2">カード名義人</label>
+                <input
+                  type="text"
+                  placeholder="TARO YAMADA"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all outline-none"
+                >
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input type="checkbox" class="w-5 h-5 text-gold-600 border-gray-300 rounded focus:ring-gold-500">
+                <span class="text-sm text-navy-700">このカード情報を保存する</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="mt-8">
+            <button class="w-full bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-gold-500/30 transition-all">
+              ¥68,000 を支払う
+            </button>
+            <p class="text-xs text-navy-400 text-center mt-3">
+              お支払いすることで<a href="#" class="text-gold-600 underline">利用規約</a>に同意したものとみなされます
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="md:col-span-2">
+        <div class="bg-white rounded-2xl p-6 shadow-sm sticky top-6">
+          <h2 class="font-bold text-navy-800 mb-4">ご注文内容</h2>
+
+          <!-- Product Info -->
+          <div class="flex gap-4 mb-4 pb-4 border-b border-gray-100">
+            <div class="w-20 h-20 bg-cream-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-8 h-8 text-navy-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-navy-800 text-sm">ヴィトン ポルトフォイユ・ヴィクトリーヌ</h3>
+              <p class="text-xs text-navy-500 mt-1">出品者: 山田 太郎</p>
+            </div>
+          </div>
+
+          <!-- Price Details -->
+          <div class="space-y-3 mb-4 pb-4 border-b border-gray-100">
+            <div class="flex items-center justify-between">
+              <span class="text-navy-600">落札金額</span>
+              <span class="font-medium text-navy-800">¥65,000</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-navy-600">システム手数料（税込）</span>
+              <span class="font-medium text-navy-800">¥3,000</span>
+            </div>
+          </div>
+
+          <!-- Total -->
+          <div class="flex items-center justify-between mb-6">
+            <span class="font-bold text-navy-800">お支払い合計</span>
+            <span class="text-2xl font-bold text-gold-600">¥68,000</span>
+          </div>
+
+          <!-- Security Info -->
+          <div class="bg-cream-50 rounded-xl p-4">
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+              </svg>
+              <div>
+                <p class="font-medium text-navy-800 text-sm mb-1">安心・安全なお取引</p>
+                <p class="text-xs text-navy-500">
+                  お支払い情報はSSL暗号化で保護されています。商品到着後に出品者へ代金が支払われます。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Help -->
+        <div class="mt-4 text-center">
+          <a href="messages.html" class="text-sm text-gold-600 hover:text-gold-700">
+            お支払いについてのお問い合わせ
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

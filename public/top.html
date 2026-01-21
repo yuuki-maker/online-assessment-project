@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>【質屋オンライン】複数の質屋から一括見積もり | KAIMAX</title>
+  <meta name="description" content="質屋オンラインで複数の質屋から一括見積もり。ブランド品、時計、貴金属など、写真を送るだけで最大10社から査定。オークション形式で最高値を実現。">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              900: '#0A0F1C',
+              800: '#0F172A',
+              700: '#1E293B',
+              600: '#334155',
+            },
+            gold: {
+              400: '#E5C158',
+              500: '#C9A227',
+              600: '#A88A1F',
+            },
+            cream: {
+              50: '#FEFDFB',
+              100: '#FBF9F3',
+              200: '#F5F0E5',
+            }
+          },
+          fontFamily: {
+            'display': ['Cormorant Garamond', 'Noto Serif JP', 'serif'],
+            'sans': ['Noto Sans JP', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .gradient-text {
+      background: linear-gradient(135deg, #E5C158 0%, #C9A227 50%, #A88A1F 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-gradient {
+      background: linear-gradient(135deg, #0A0F1C 0%, #0F172A 50%, #1E293B 100%);
+    }
+    .card-shine {
+      background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 50%);
+    }
+    .gold-border {
+      border-image: linear-gradient(135deg, #E5C158, #A88A1F) 1;
+    }
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .noise-overlay {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    }
+  </style>
+</head>
+<body class="font-sans bg-cream-50 text-navy-800 antialiased">
+  <!-- Navigation -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-navy-900/95 backdrop-blur-md border-b border-gold-500/20">
+    <nav class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="top.html" class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+            <span class="font-display text-navy-900 text-xl font-bold">K</span>
+          </div>
+          <span class="font-display text-2xl text-white tracking-wide">KAIMAX</span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-8">
+          <a href="sell.html" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">売りたい方へ</a>
+          <a href="partner.html" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">質屋の方へ</a>
+          <a href="#how-it-works" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">ご利用の流れ</a>
+          <a href="#faq" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">よくある質問</a>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <a href="../auth/login.html" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">ログイン</a>
+          <a href="../auth/register.html" class="bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 px-6 py-2.5 rounded-full text-sm font-semibold hover:shadow-lg hover:shadow-gold-500/30 transition-all">
+            無料登録
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-gradient min-h-screen relative overflow-hidden">
+    <div class="noise-overlay absolute inset-0 pointer-events-none"></div>
+
+    <!-- Decorative elements -->
+    <div class="absolute top-20 right-10 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-20 left-10 w-64 h-64 bg-gold-500/10 rounded-full blur-3xl"></div>
+
+    <div class="max-w-7xl mx-auto px-6 pt-32 pb-20 relative">
+      <div class="grid lg:grid-cols-2 gap-16 items-center min-h-[calc(100vh-200px)]">
+        <div class="space-y-8">
+          <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm border border-gold-500/30 rounded-full px-4 py-2">
+            <span class="w-2 h-2 bg-gold-400 rounded-full animate-pulse"></span>
+            <span class="text-cream-200 text-sm">複数の質屋から一括見積もり</span>
+          </div>
+
+          <h1 class="font-display text-5xl lg:text-7xl text-white leading-tight">
+            あなたの品物に<br>
+            <span class="gradient-text">最高値</span>を。
+          </h1>
+
+          <p class="text-cream-200 text-lg leading-relaxed max-w-lg">
+            写真を撮って出品するだけ。最大10社の質屋が競争入札であなたの品物を査定。オークション形式で最も高い金額を提示した質屋と取引できます。
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="../auth/register.html" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl hover:shadow-gold-500/30 transition-all group">
+              今すぐ出品する
+              <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </a>
+            <a href="#how-it-works" class="inline-flex items-center justify-center gap-2 border border-cream-200/30 text-cream-100 px-8 py-4 rounded-full text-lg hover:bg-white/5 transition-all">
+              詳しく見る
+            </a>
+          </div>
+
+          <div class="flex items-center gap-8 pt-4">
+            <div class="text-center">
+              <div class="font-display text-3xl text-gold-400">10,000+</div>
+              <div class="text-cream-300 text-sm">取引成立</div>
+            </div>
+            <div class="w-px h-12 bg-cream-200/20"></div>
+            <div class="text-center">
+              <div class="font-display text-3xl text-gold-400">500+</div>
+              <div class="text-cream-300 text-sm">加盟質屋</div>
+            </div>
+            <div class="w-px h-12 bg-cream-200/20"></div>
+            <div class="text-center">
+              <div class="font-display text-3xl text-gold-400">98%</div>
+              <div class="text-cream-300 text-sm">満足度</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative lg:pl-10">
+          <div class="relative z-10 animate-float">
+            <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20 shadow-2xl">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+              </div>
+              <div class="aspect-[4/3] bg-gradient-to-br from-navy-700 to-navy-800 rounded-2xl overflow-hidden mb-4">
+                <div class="w-full h-full flex items-center justify-center">
+                  <div class="text-center">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-gold-500/20 rounded-full flex items-center justify-center">
+                      <svg class="w-10 h-10 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                      </svg>
+                    </div>
+                    <p class="text-cream-200 text-sm">商品写真をアップロード</p>
+                  </div>
+                </div>
+              </div>
+              <div class="space-y-3">
+                <div class="flex items-center justify-between bg-white/5 rounded-xl px-4 py-3">
+                  <span class="text-cream-200 text-sm">カテゴリ</span>
+                  <span class="text-white text-sm font-medium">ブランド品</span>
+                </div>
+                <div class="flex items-center justify-between bg-white/5 rounded-xl px-4 py-3">
+                  <span class="text-cream-200 text-sm">最低入札額</span>
+                  <span class="text-gold-400 text-sm font-medium">¥50,000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating bid cards -->
+          <div class="absolute -right-4 top-1/4 bg-white rounded-xl p-4 shadow-xl animate-float" style="animation-delay: 0.5s;">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-navy-800 rounded-lg flex items-center justify-center">
+                <span class="text-gold-400 font-bold text-sm">A</span>
+              </div>
+              <div>
+                <div class="text-sm font-medium text-navy-800">質屋 A</div>
+                <div class="text-gold-500 font-bold">¥85,000</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="absolute -left-4 bottom-1/4 bg-white rounded-xl p-4 shadow-xl animate-float" style="animation-delay: 1s;">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-navy-800 rounded-lg flex items-center justify-center">
+                <span class="text-gold-400 font-bold text-sm">B</span>
+              </div>
+              <div>
+                <div class="text-sm font-medium text-navy-800">質屋 B</div>
+                <div class="text-gold-500 font-bold">¥92,000</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2">
+      <div class="w-6 h-10 border-2 border-cream-200/30 rounded-full flex items-start justify-center p-1">
+        <div class="w-1.5 h-3 bg-gold-400 rounded-full animate-bounce"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="py-24 bg-cream-50">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <span class="text-gold-500 text-sm font-medium tracking-wider uppercase">Categories</span>
+        <h2 class="font-display text-4xl text-navy-800 mt-4">取扱カテゴリ</h2>
+        <p class="text-navy-600 mt-4 max-w-2xl mx-auto">幅広いカテゴリの品物に対応。専門の質屋が適正価格で査定いたします。</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <a href="#" class="group relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-gold-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-navy-800 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-7 h-7 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-navy-800 text-lg mb-2">ブランド品</h3>
+            <p class="text-navy-600 text-sm">バッグ、財布、アクセサリー等</p>
+          </div>
+        </a>
+
+        <a href="#" class="group relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-gold-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-navy-800 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-7 h-7 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-navy-800 text-lg mb-2">時計</h3>
+            <p class="text-navy-600 text-sm">高級時計、アンティーク等</p>
+          </div>
+        </a>
+
+        <a href="#" class="group relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-gold-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-navy-800 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-7 h-7 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-navy-800 text-lg mb-2">貴金属・宝石</h3>
+            <p class="text-navy-600 text-sm">金、プラチナ、ダイヤモンド等</p>
+          </div>
+        </a>
+
+        <a href="#" class="group relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-gold-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-navy-800 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-7 h-7 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-navy-800 text-lg mb-2">家電・カメラ</h3>
+            <p class="text-navy-600 text-sm">PC、カメラ、オーディオ等</p>
+          </div>
+        </a>
+
+        <a href="#" class="group relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-gold-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-navy-800 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-7 h-7 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-navy-800 text-lg mb-2">楽器</h3>
+            <p class="text-navy-600 text-sm">ギター、管楽器、鍵盤楽器等</p>
+          </div>
+        </a>
+
+        <a href="#" class="group relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-gold-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-navy-800 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-7 h-7 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-navy-800 text-lg mb-2">スポーツ用品</h3>
+            <p class="text-navy-600 text-sm">ゴルフ、アウトドア用品等</p>
+          </div>
+        </a>
+
+        <a href="#" class="group relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-gold-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-navy-800 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-7 h-7 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-navy-800 text-lg mb-2">美術品・骨董品</h3>
+            <p class="text-navy-600 text-sm">絵画、陶磁器、彫刻等</p>
+          </div>
+        </a>
+
+        <a href="#" class="group relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-gold-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-navy-800 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-7 h-7 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-navy-800 text-lg mb-2">その他</h3>
+            <p class="text-navy-600 text-sm">その他高価値品</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works Section -->
+  <section id="how-it-works" class="py-24 bg-navy-800 relative overflow-hidden">
+    <div class="noise-overlay absolute inset-0 pointer-events-none"></div>
+    <div class="absolute top-0 right-0 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative">
+      <div class="text-center mb-16">
+        <span class="text-gold-400 text-sm font-medium tracking-wider uppercase">How it works</span>
+        <h2 class="font-display text-4xl text-white mt-4">ご利用の流れ</h2>
+        <p class="text-cream-200 mt-4 max-w-2xl mx-auto">たった3ステップで、あなたの品物を最高値で売却できます。</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="relative">
+          <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 h-full">
+            <div class="w-16 h-16 bg-gradient-to-br from-gold-400 to-gold-600 rounded-2xl flex items-center justify-center mb-6">
+              <span class="font-display text-3xl text-navy-900">1</span>
+            </div>
+            <h3 class="text-white text-xl font-semibold mb-4">写真を撮って出品</h3>
+            <p class="text-cream-200 leading-relaxed">
+              売りたい品物の写真を撮影し、カテゴリや最低入札額を設定して出品。最大10枚まで写真をアップロードできます。
+            </p>
+          </div>
+          <div class="hidden md:block absolute top-1/2 -right-4 w-8 h-px bg-gradient-to-r from-gold-400 to-transparent"></div>
+        </div>
+
+        <div class="relative">
+          <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 h-full">
+            <div class="w-16 h-16 bg-gradient-to-br from-gold-400 to-gold-600 rounded-2xl flex items-center justify-center mb-6">
+              <span class="font-display text-3xl text-navy-900">2</span>
+            </div>
+            <h3 class="text-white text-xl font-semibold mb-4">質屋が競争入札</h3>
+            <p class="text-cream-200 leading-relaxed">
+              全国の加盟質屋があなたの品物に入札。オークション形式で価格が競り上がり、最高値を目指します。
+            </p>
+          </div>
+          <div class="hidden md:block absolute top-1/2 -right-4 w-8 h-px bg-gradient-to-r from-gold-400 to-transparent"></div>
+        </div>
+
+        <div class="relative">
+          <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 h-full">
+            <div class="w-16 h-16 bg-gradient-to-br from-gold-400 to-gold-600 rounded-2xl flex items-center justify-center mb-6">
+              <span class="font-display text-3xl text-navy-900">3</span>
+            </div>
+            <h3 class="text-white text-xl font-semibold mb-4">取引成立・入金</h3>
+            <p class="text-cream-200 leading-relaxed">
+              入札を承諾後、品物を発送。質屋が受取確認後、エスクローから売上金があなたの口座に振り込まれます。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-12">
+        <a href="sell.html" class="inline-flex items-center gap-2 bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl hover:shadow-gold-500/30 transition-all">
+          詳しい流れを見る
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-24 bg-cream-100">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <span class="text-gold-500 text-sm font-medium tracking-wider uppercase">Features</span>
+        <h2 class="font-display text-4xl text-navy-800 mt-4">KAIMAXの特徴</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-white rounded-2xl p-8 shadow-sm">
+          <div class="w-14 h-14 bg-gold-400/20 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-navy-800 text-xl font-semibold mb-3">最高値で売却</h3>
+          <p class="text-navy-600 leading-relaxed">
+            複数の質屋が競争入札するため、1社のみの査定より高い価格で売却できます。
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-8 shadow-sm">
+          <div class="w-14 h-14 bg-gold-400/20 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+          </div>
+          <h3 class="text-navy-800 text-xl font-semibold mb-3">安心のエスクロー決済</h3>
+          <p class="text-navy-600 leading-relaxed">
+            取引代金はプラットフォームが預かり、取引完了後に振込。安全な取引を保証します。
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-8 shadow-sm">
+          <div class="w-14 h-14 bg-gold-400/20 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-navy-800 text-xl font-semibold mb-3">自由な期間設定</h3>
+          <p class="text-navy-600 leading-relaxed">
+            入札期間や承諾期限を自分で設定可能。急ぎの場合も、じっくり待ちたい場合も対応。
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-8 shadow-sm">
+          <div class="w-14 h-14 bg-gold-400/20 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+            </svg>
+          </div>
+          <h3 class="text-navy-800 text-xl font-semibold mb-3">透明な入札</h3>
+          <p class="text-navy-600 leading-relaxed">
+            すべての入札状況をリアルタイムで確認。どの質屋がいくらで入札しているか一目瞭然。
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-8 shadow-sm">
+          <div class="w-14 h-14 bg-gold-400/20 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+            </svg>
+          </div>
+          <h3 class="text-navy-800 text-xl font-semibold mb-3">質屋と直接やり取り</h3>
+          <p class="text-navy-600 leading-relaxed">
+            メッセージ機能で質屋と直接コミュニケーション。質問や交渉もスムーズに。
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-8 shadow-sm">
+          <div class="w-14 h-14 bg-gold-400/20 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+            </svg>
+          </div>
+          <h3 class="text-navy-800 text-xl font-semibold mb-3">審査済み質屋のみ</h3>
+          <p class="text-navy-600 leading-relaxed">
+            古物商許可証を持つ審査済み質屋のみが参加。安心して取引できます。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-24 hero-gradient relative overflow-hidden">
+    <div class="noise-overlay absolute inset-0 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-gold-500/10 via-transparent to-gold-500/10"></div>
+
+    <div class="max-w-4xl mx-auto px-6 text-center relative">
+      <h2 class="font-display text-4xl lg:text-5xl text-white mb-6">
+        今すぐ始めて、<br>最高値で売却しましょう
+      </h2>
+      <p class="text-cream-200 text-lg mb-10 max-w-2xl mx-auto">
+        登録は無料。写真を撮って出品するだけで、複数の質屋から入札を受けられます。
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="../auth/register.html" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 px-10 py-4 rounded-full text-lg font-semibold hover:shadow-xl hover:shadow-gold-500/30 transition-all">
+          無料で会員登録
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+        <a href="partner.html" class="inline-flex items-center justify-center gap-2 border border-cream-200/30 text-cream-100 px-10 py-4 rounded-full text-lg hover:bg-white/5 transition-all">
+          質屋の方はこちら
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-navy-900 text-cream-200 py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div>
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+              <span class="font-display text-navy-900 text-xl font-bold">K</span>
+            </div>
+            <span class="font-display text-2xl text-white tracking-wide">KAIMAX</span>
+          </div>
+          <p class="text-cream-300 text-sm leading-relaxed">
+            複数の質屋から一括見積もりができるオンライン質屋マッチングサービス。
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-white font-semibold mb-4">サービス</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="sell.html" class="hover:text-gold-400 transition-colors">売りたい方へ</a></li>
+            <li><a href="partner.html" class="hover:text-gold-400 transition-colors">質屋の方へ</a></li>
+            <li><a href="#how-it-works" class="hover:text-gold-400 transition-colors">ご利用の流れ</a></li>
+            <li><a href="#" class="hover:text-gold-400 transition-colors">取扱カテゴリ</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-semibold mb-4">サポート</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="#faq" class="hover:text-gold-400 transition-colors">よくある質問</a></li>
+            <li><a href="#" class="hover:text-gold-400 transition-colors">お問い合わせ</a></li>
+            <li><a href="#" class="hover:text-gold-400 transition-colors">利用ガイド</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-semibold mb-4">会社情報</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="#" class="hover:text-gold-400 transition-colors">運営会社</a></li>
+            <li><a href="#" class="hover:text-gold-400 transition-colors">利用規約</a></li>
+            <li><a href="#" class="hover:text-gold-400 transition-colors">プライバシーポリシー</a></li>
+            <li><a href="#" class="hover:text-gold-400 transition-colors">特定商取引法に基づく表記</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-cream-400 text-sm">&copy; 2026 KAIMAX. All rights reserved.</p>
+        <div class="flex gap-4">
+          <a href="#" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+          </a>
+          <a href="#" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

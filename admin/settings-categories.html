@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>カテゴリ管理 | KAIMAX Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: { 900: '#0A0F1C', 800: '#0F172A', 700: '#1E293B', 600: '#334155' },
+            gold: { 400: '#E5C158', 500: '#C9A227', 600: '#A88A1F' },
+            cream: { 50: '#FEFDFB', 100: '#FBF9F3', 200: '#F5F0E5' }
+          },
+          fontFamily: { 'display': ['Cormorant Garamond', 'serif'], 'sans': ['Noto Sans JP', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-gray-100 text-navy-800 antialiased">
+  <div class="flex min-h-screen">
+    <!-- Sidebar (same as other pages) -->
+    <aside class="w-64 bg-navy-900 flex-shrink-0">
+      <div class="p-6">
+        <a href="../public/top.html" class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+            <span class="font-display text-navy-900 text-xl font-bold">K</span>
+          </div>
+          <div>
+            <span class="font-display text-xl text-white tracking-wide block">KAIMAX</span>
+            <span class="text-xs text-gold-400">Admin</span>
+          </div>
+        </a>
+      </div>
+      <nav class="px-4 py-6 space-y-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          <span>ダッシュボード</span>
+        </a>
+        <div class="pt-4">
+          <div class="text-xs text-gray-500 px-4 mb-2 uppercase tracking-wider">設定・レポート</div>
+          <a href="reports.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+            <span>レポート</span>
+          </a>
+          <a href="settings.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/10 text-gold-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span class="font-medium">設定</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+      <header class="bg-white border-b border-gray-200 px-8 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <a href="settings.html" class="text-navy-500 hover:text-navy-700">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </a>
+            <h1 class="text-xl font-bold text-navy-800">カテゴリ管理</h1>
+          </div>
+          <div class="flex items-center gap-4">
+            <button class="px-4 py-2 bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 rounded-xl font-semibold text-sm">+ 新規カテゴリ</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="flex-1 p-8 overflow-auto">
+        <!-- Settings Navigation -->
+        <div class="bg-white rounded-2xl shadow-sm mb-6">
+          <div class="flex border-b border-gray-100">
+            <a href="settings-fees.html" class="px-6 py-4 text-sm font-medium text-navy-500 hover:text-navy-700">手数料設定</a>
+            <a href="settings-categories.html" class="px-6 py-4 text-sm font-medium text-gold-600 border-b-2 border-gold-500">カテゴリ管理</a>
+            <a href="settings-conditions.html" class="px-6 py-4 text-sm font-medium text-navy-500 hover:text-navy-700">商品状態管理</a>
+            <a href="settings-seo.html" class="px-6 py-4 text-sm font-medium text-navy-500 hover:text-navy-700">SEO設定</a>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-4 gap-4 mb-6">
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="text-2xl font-bold text-navy-800">8</div>
+            <div class="text-sm text-navy-500">メインカテゴリ</div>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="text-2xl font-bold text-navy-800">42</div>
+            <div class="text-sm text-navy-500">サブカテゴリ</div>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="text-2xl font-bold text-green-600">45</div>
+            <div class="text-sm text-navy-500">有効</div>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="text-2xl font-bold text-gray-400">5</div>
+            <div class="text-sm text-navy-500">無効</div>
+          </div>
+        </div>
+
+        <!-- Category List -->
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+          <div class="p-6 border-b border-gray-100">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-navy-800">カテゴリ一覧</h3>
+              <input type="text" placeholder="カテゴリを検索..." class="px-4 py-2 rounded-xl border border-gray-200 focus:border-gold-500 outline-none text-sm w-64">
+            </div>
+          </div>
+          <div class="divide-y divide-gray-50">
+            <!-- Category Item -->
+            <div class="p-4 hover:bg-gray-50">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                  </div>
+                  <div>
+                    <div class="font-medium text-navy-800">ブランドバッグ</div>
+                    <div class="text-sm text-navy-500">8 サブカテゴリ • 1,245 商品</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">有効</span>
+                  <button class="text-navy-400 hover:text-navy-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                  </button>
+                  <button class="text-gold-600 hover:text-gold-700 text-sm font-medium">編集</button>
+                </div>
+              </div>
+              <!-- Subcategories -->
+              <div class="mt-4 ml-14 space-y-2">
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <span class="text-sm text-navy-700">トートバッグ</span>
+                  <div class="flex items-center gap-3">
+                    <span class="text-xs text-navy-400">423 商品</span>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">有効</span>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <span class="text-sm text-navy-700">ショルダーバッグ</span>
+                  <div class="flex items-center gap-3">
+                    <span class="text-xs text-navy-400">312 商品</span>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">有効</span>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <span class="text-sm text-navy-700">ハンドバッグ</span>
+                  <div class="flex items-center gap-3">
+                    <span class="text-xs text-navy-400">289 商品</span>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">有効</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Category Item -->
+            <div class="p-4 hover:bg-gray-50">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  </div>
+                  <div>
+                    <div class="font-medium text-navy-800">腕時計</div>
+                    <div class="text-sm text-navy-500">6 サブカテゴリ • 856 商品</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">有効</span>
+                  <button class="text-navy-400 hover:text-navy-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                  </button>
+                  <button class="text-gold-600 hover:text-gold-700 text-sm font-medium">編集</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Category Item -->
+            <div class="p-4 hover:bg-gray-50">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                  </div>
+                  <div>
+                    <div class="font-medium text-navy-800">ジュエリー</div>
+                    <div class="text-sm text-navy-500">10 サブカテゴリ • 1,023 商品</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">有効</span>
+                  <button class="text-navy-400 hover:text-navy-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                  </button>
+                  <button class="text-gold-600 hover:text-gold-700 text-sm font-medium">編集</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Category Item -->
+            <div class="p-4 hover:bg-gray-50">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-10 h-10 bg-gold-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  </div>
+                  <div>
+                    <div class="font-medium text-navy-800">貴金属</div>
+                    <div class="text-sm text-navy-500">5 サブカテゴリ • 678 商品</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">有効</span>
+                  <button class="text-navy-400 hover:text-navy-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                  </button>
+                  <button class="text-gold-600 hover:text-gold-700 text-sm font-medium">編集</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Category Item -->
+            <div class="p-4 hover:bg-gray-50">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+                  </div>
+                  <div>
+                    <div class="font-medium text-navy-800">家電・カメラ</div>
+                    <div class="text-sm text-navy-500">7 サブカテゴリ • 234 商品</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">有効</span>
+                  <button class="text-navy-400 hover:text-navy-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                  </button>
+                  <button class="text-gold-600 hover:text-gold-700 text-sm font-medium">編集</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Category Item (Disabled) -->
+            <div class="p-4 hover:bg-gray-50 opacity-60">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                  </div>
+                  <div>
+                    <div class="font-medium text-navy-800">楽器</div>
+                    <div class="text-sm text-navy-500">3 サブカテゴリ • 0 商品</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600">無効</span>
+                  <button class="text-navy-400 hover:text-navy-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                  </button>
+                  <button class="text-gold-600 hover:text-gold-700 text-sm font-medium">編集</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

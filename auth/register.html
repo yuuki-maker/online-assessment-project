@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>会員登録 | KAIMAX</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              900: '#0A0F1C',
+              800: '#0F172A',
+              700: '#1E293B',
+              600: '#334155',
+            },
+            gold: {
+              400: '#E5C158',
+              500: '#C9A227',
+              600: '#A88A1F',
+            },
+            cream: {
+              50: '#FEFDFB',
+              100: '#FBF9F3',
+              200: '#F5F0E5',
+            }
+          },
+          fontFamily: {
+            'display': ['Cormorant Garamond', 'Noto Serif JP', 'serif'],
+            'sans': ['Noto Sans JP', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .hero-gradient {
+      background: linear-gradient(135deg, #0A0F1C 0%, #0F172A 50%, #1E293B 100%);
+    }
+    .noise-overlay {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    }
+  </style>
+</head>
+<body class="font-sans bg-cream-50 text-navy-800 antialiased">
+  <div class="min-h-screen">
+    <!-- Header -->
+    <header class="p-6 flex items-center justify-between border-b border-gray-100 bg-white">
+      <a href="../public/top.html" class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+          <span class="font-display text-navy-900 text-lg font-bold">K</span>
+        </div>
+        <span class="font-display text-xl text-navy-800 tracking-wide">KAIMAX</span>
+      </a>
+      <a href="login.html" class="text-gold-600 hover:text-gold-700 font-medium text-sm">既にアカウントをお持ちの方</a>
+    </header>
+
+    <div class="max-w-2xl mx-auto px-6 py-12">
+      <!-- Progress Steps -->
+      <div class="mb-12">
+        <div class="flex items-center justify-between relative">
+          <div class="absolute top-5 left-0 right-0 h-0.5 bg-gray-200">
+            <div class="h-full bg-gold-500 transition-all" style="width: 0%"></div>
+          </div>
+
+          <div class="relative flex flex-col items-center">
+            <div class="w-10 h-10 bg-gold-500 rounded-full flex items-center justify-center text-white font-semibold z-10">1</div>
+            <span class="mt-2 text-sm font-medium text-gold-600">基本情報</span>
+          </div>
+
+          <div class="relative flex flex-col items-center">
+            <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-navy-500 font-semibold z-10">2</div>
+            <span class="mt-2 text-sm text-navy-500">本人確認</span>
+          </div>
+
+          <div class="relative flex flex-col items-center">
+            <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-navy-500 font-semibold z-10">3</div>
+            <span class="mt-2 text-sm text-navy-500">口座情報</span>
+          </div>
+
+          <div class="relative flex flex-col items-center">
+            <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-navy-500 font-semibold z-10">4</div>
+            <span class="mt-2 text-sm text-navy-500">確認</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="bg-white rounded-3xl shadow-sm p-8">
+        <h1 class="text-2xl font-bold text-navy-800 mb-2">会員登録</h1>
+        <p class="text-navy-600 mb-8">基本情報を入力してください</p>
+
+        <form class="space-y-6">
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-navy-700 mb-2">
+                姓 <span class="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                placeholder="山田"
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all outline-none"
+              >
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-navy-700 mb-2">
+                名 <span class="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                placeholder="太郎"
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all outline-none"
+              >
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-navy-700 mb-2">
+              メールアドレス <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="email"
+              placeholder="email@example.com"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all outline-none"
+            >
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-navy-700 mb-2">
+              電話番号 <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="tel"
+              placeholder="090-1234-5678"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all outline-none"
+            >
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-navy-700 mb-2">
+              パスワード <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="password"
+              placeholder="8文字以上の英数字"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all outline-none"
+            >
+            <p class="mt-2 text-sm text-navy-500">8文字以上、英字と数字を含めてください</p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-navy-700 mb-2">
+              パスワード（確認） <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="password"
+              placeholder="パスワードを再入力"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all outline-none"
+            >
+          </div>
+
+          <div class="pt-4 border-t border-gray-100">
+            <h3 class="text-lg font-semibold text-navy-800 mb-4">住所</h3>
+
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-navy-700 mb-2">
+                  郵便番号 <span class="text-red-500">*</span>
+                </label>
+                <div class="flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="123-4567"
+                    class="w-48 px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all outline-none"
+                  >
+                  <button type="button" class="px-4 py-3 border border-gold-500 text-gold-600 rounded-xl hover:bg-gold-50 transition-colors">
+                    住所検索
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-navy-700 mb-2">
+                  都道府県 <span class="text-red-500">*</span>
+                </label>
+                <select class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all outline-none">
+                  <option value="">選択してください</option>
+                  <option value="tokyo">東京都</option>
+                  <option value="osaka">大阪府</option>
+                  <option value="kanagawa">神奈川県</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-navy-700 mb-2">
+                  市区町村 <span class="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="渋谷区"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all outline-none"
+                >
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-navy-700 mb-2">
+                  番地・建物名 <span class="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="1-2-3 サンプルビル101"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all outline-none"
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-gray-100">
+            <h3 class="text-lg font-semibold text-navy-800 mb-4">通知設定</h3>
+            <div class="space-y-3">
+              <label class="flex items-center gap-3">
+                <input type="checkbox" checked class="w-5 h-5 text-gold-600 border-gray-300 rounded focus:ring-gold-500">
+                <span class="text-navy-700">メールで通知を受け取る</span>
+              </label>
+              <label class="flex items-center gap-3">
+                <input type="checkbox" class="w-5 h-5 text-gold-600 border-gray-300 rounded focus:ring-gold-500">
+                <span class="text-navy-700">SMSで通知を受け取る</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="flex justify-end pt-6">
+            <a href="register-identity.html" class="bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 px-8 py-4 rounded-xl font-semibold hover:shadow-lg hover:shadow-gold-500/30 transition-all flex items-center gap-2">
+              次へ：本人確認
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </a>
+          </div>
+        </form>
+      </div>
+
+      <!-- Info Box -->
+      <div class="mt-8 bg-cream-100 rounded-2xl p-6">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 bg-gold-400/20 rounded-full flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <div>
+            <h4 class="font-semibold text-navy-800 mb-1">登録に必要なもの</h4>
+            <ul class="text-sm text-navy-600 space-y-1">
+              <li>・本人確認書類（運転免許証、マイナンバーカード等）</li>
+              <li>・振込先銀行口座情報</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="p-6 border-t border-gray-100 text-center text-sm text-navy-500 bg-white">
+      <a href="#" class="hover:text-navy-700">利用規約</a>
+      <span class="mx-2">・</span>
+      <a href="#" class="hover:text-navy-700">プライバシーポリシー</a>
+    </div>
+  </div>
+</body>
+</html>

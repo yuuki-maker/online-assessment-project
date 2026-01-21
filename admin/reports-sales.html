@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>売上レポート | KAIMAX Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: { 900: '#0A0F1C', 800: '#0F172A', 700: '#1E293B', 600: '#334155' },
+            gold: { 400: '#E5C158', 500: '#C9A227', 600: '#A88A1F' },
+            cream: { 50: '#FEFDFB', 100: '#FBF9F3', 200: '#F5F0E5' }
+          },
+          fontFamily: { 'display': ['Cormorant Garamond', 'serif'], 'sans': ['Noto Sans JP', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-gray-100 text-navy-800 antialiased">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-navy-900 flex-shrink-0">
+      <div class="p-6">
+        <a href="../public/top.html" class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+            <span class="font-display text-navy-900 text-xl font-bold">K</span>
+          </div>
+          <div>
+            <span class="font-display text-xl text-white tracking-wide block">KAIMAX</span>
+            <span class="text-xs text-gold-400">Admin</span>
+          </div>
+        </a>
+      </div>
+      <nav class="px-4 py-6 space-y-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          <span>ダッシュボード</span>
+        </a>
+        <div class="pt-4">
+          <div class="text-xs text-gray-500 px-4 mb-2 uppercase tracking-wider">設定・レポート</div>
+          <a href="reports.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/10 text-gold-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+            <span class="font-medium">レポート</span>
+          </a>
+          <a href="settings.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span>設定</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+      <header class="bg-white border-b border-gray-200 px-8 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <a href="reports.html" class="text-navy-500 hover:text-navy-700">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </a>
+            <h1 class="text-xl font-bold text-navy-800">売上レポート</h1>
+          </div>
+          <div class="flex items-center gap-4">
+            <button class="px-4 py-2 border border-gray-200 text-navy-600 rounded-xl text-sm font-medium hover:bg-gray-50 flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+              CSVダウンロード
+            </button>
+            <button class="px-4 py-2 border border-gray-200 text-navy-600 rounded-xl text-sm font-medium hover:bg-gray-50 flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+              印刷
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main class="flex-1 p-8 overflow-auto">
+        <!-- Report Navigation -->
+        <div class="bg-white rounded-2xl shadow-sm mb-6">
+          <div class="flex border-b border-gray-100">
+            <a href="reports-sales.html" class="px-6 py-4 text-sm font-medium text-gold-600 border-b-2 border-gold-500">売上レポート</a>
+            <a href="reports-payments.html" class="px-6 py-4 text-sm font-medium text-navy-500 hover:text-navy-700">決済レポート</a>
+          </div>
+        </div>
+
+        <!-- Date Filter -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm mb-6">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div>
+                <label class="block text-xs text-navy-500 mb-1">期間</label>
+                <select class="px-4 py-2 rounded-xl border border-gray-200 focus:border-gold-500 outline-none text-sm">
+                  <option>今月</option>
+                  <option>先月</option>
+                  <option>過去3ヶ月</option>
+                  <option>過去6ヶ月</option>
+                  <option>今年</option>
+                  <option>カスタム</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs text-navy-500 mb-1">開始日</label>
+                <input type="date" value="2024-01-01" class="px-4 py-2 rounded-xl border border-gray-200 focus:border-gold-500 outline-none text-sm">
+              </div>
+              <div>
+                <label class="block text-xs text-navy-500 mb-1">終了日</label>
+                <input type="date" value="2024-01-31" class="px-4 py-2 rounded-xl border border-gray-200 focus:border-gold-500 outline-none text-sm">
+              </div>
+              <button class="mt-5 px-6 py-2 bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 rounded-xl font-semibold text-sm">適用</button>
+            </div>
+            <div class="text-sm text-navy-500">
+              レポート期間: 2024/01/01 - 2024/01/31
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="grid grid-cols-4 gap-4 mb-6">
+          <div class="bg-white rounded-xl p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm text-navy-500">総取引高</span>
+              <span class="text-xs text-green-600 bg-green-100 px-2 py-0.5 rounded-full">+18%</span>
+            </div>
+            <div class="text-3xl font-bold text-navy-800">¥156.8M</div>
+            <div class="text-xs text-navy-400 mt-1">前月比 +¥23.5M</div>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm text-navy-500">手数料収入</span>
+              <span class="text-xs text-green-600 bg-green-100 px-2 py-0.5 rounded-full">+22%</span>
+            </div>
+            <div class="text-3xl font-bold text-gold-600">¥4.7M</div>
+            <div class="text-xs text-navy-400 mt-1">前月比 +¥0.85M</div>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm text-navy-500">取引件数</span>
+              <span class="text-xs text-green-600 bg-green-100 px-2 py-0.5 rounded-full">+15%</span>
+            </div>
+            <div class="text-3xl font-bold text-navy-800">1,847</div>
+            <div class="text-xs text-navy-400 mt-1">前月比 +245件</div>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm text-navy-500">平均取引額</span>
+              <span class="text-xs text-green-600 bg-green-100 px-2 py-0.5 rounded-full">+3%</span>
+            </div>
+            <div class="text-3xl font-bold text-navy-800">¥84,900</div>
+            <div class="text-xs text-navy-400 mt-1">前月比 +¥2,400</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-6 mb-6">
+          <!-- Sales Chart -->
+          <div class="col-span-2 bg-white rounded-2xl p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="font-bold text-navy-800">売上推移</h3>
+              <div class="flex items-center gap-2">
+                <button class="px-3 py-1 rounded-lg bg-gold-100 text-gold-700 text-sm font-medium">日別</button>
+                <button class="px-3 py-1 rounded-lg text-navy-500 text-sm">週別</button>
+                <button class="px-3 py-1 rounded-lg text-navy-500 text-sm">月別</button>
+              </div>
+            </div>
+            <div class="h-64">
+              <canvas id="salesChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Category Breakdown -->
+          <div class="bg-white rounded-2xl p-6 shadow-sm">
+            <h3 class="font-bold text-navy-800 mb-6">カテゴリ別売上</h3>
+            <div class="space-y-4">
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-sm text-navy-700">ブランドバッグ</span>
+                  <span class="text-sm font-medium text-navy-800">¥52.4M</span>
+                </div>
+                <div class="w-full bg-gray-100 rounded-full h-2">
+                  <div class="bg-purple-500 h-2 rounded-full" style="width: 33%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-sm text-navy-700">腕時計</span>
+                  <span class="text-sm font-medium text-navy-800">¥45.8M</span>
+                </div>
+                <div class="w-full bg-gray-100 rounded-full h-2">
+                  <div class="bg-blue-500 h-2 rounded-full" style="width: 29%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-sm text-navy-700">ジュエリー</span>
+                  <span class="text-sm font-medium text-navy-800">¥32.6M</span>
+                </div>
+                <div class="w-full bg-gray-100 rounded-full h-2">
+                  <div class="bg-pink-500 h-2 rounded-full" style="width: 21%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-sm text-navy-700">貴金属</span>
+                  <span class="text-sm font-medium text-navy-800">¥18.5M</span>
+                </div>
+                <div class="w-full bg-gray-100 rounded-full h-2">
+                  <div class="bg-gold-500 h-2 rounded-full" style="width: 12%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-sm text-navy-700">その他</span>
+                  <span class="text-sm font-medium text-navy-800">¥7.5M</span>
+                </div>
+                <div class="w-full bg-gray-100 rounded-full h-2">
+                  <div class="bg-gray-400 h-2 rounded-full" style="width: 5%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Performers -->
+        <div class="grid grid-cols-2 gap-6">
+          <!-- Top Pawnshops -->
+          <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+            <div class="p-6 border-b border-gray-100">
+              <h3 class="font-bold text-navy-800">売上上位質屋</h3>
+            </div>
+            <div class="divide-y divide-gray-50">
+              <div class="p-4 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-8 h-8 bg-gold-100 rounded-lg flex items-center justify-center">
+                    <span class="text-gold-600 font-bold text-sm">1</span>
+                  </div>
+                  <div>
+                    <div class="font-medium text-navy-800">田中質店</div>
+                    <div class="text-xs text-navy-500">東京都新宿区</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="font-semibold text-navy-800">¥12.4M</div>
+                  <div class="text-xs text-navy-500">156件</div>
+                </div>
+              </div>
+              <div class="p-4 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                    <span class="text-gray-600 font-bold text-sm">2</span>
+                  </div>
+                  <div>
+                    <div class="font-medium text-navy-800">佐藤質舗</div>
+                    <div class="text-xs text-navy-500">大阪府大阪市</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="font-semibold text-navy-800">¥10.8M</div>
+                  <div class="text-xs text-navy-500">134件</div>
+                </div>
+              </div>
+              <div class="p-4 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                    <span class="text-orange-600 font-bold text-sm">3</span>
+                  </div>
+                  <div>
+                    <div class="font-medium text-navy-800">高橋商会</div>
+                    <div class="text-xs text-navy-500">愛知県名古屋市</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="font-semibold text-navy-800">¥9.2M</div>
+                  <div class="text-xs text-navy-500">112件</div>
+                </div>
+              </div>
+              <div class="p-4 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-8 h-8 bg-gray-50 rounded-lg flex items-center justify-center">
+                    <span class="text-gray-500 font-bold text-sm">4</span>
+                  </div>
+                  <div>
+                    <div class="font-medium text-navy-800">山本質店</div>
+                    <div class="text-xs text-navy-500">福岡県福岡市</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="font-semibold text-navy-800">¥7.6M</div>
+                  <div class="text-xs text-navy-500">98件</div>
+                </div>
+              </div>
+              <div class="p-4 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-8 h-8 bg-gray-50 rounded-lg flex items-center justify-center">
+                    <span class="text-gray-500 font-bold text-sm">5</span>
+                  </div>
+                  <div>
+                    <div class="font-medium text-navy-800">中村質舗</div>
+                    <div class="text-xs text-navy-500">神奈川県横浜市</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="font-semibold text-navy-800">¥6.9M</div>
+                  <div class="text-xs text-navy-500">87件</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top Products -->
+          <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+            <div class="p-6 border-b border-gray-100">
+              <h3 class="font-bold text-navy-800">高額取引商品</h3>
+            </div>
+            <div class="divide-y divide-gray-50">
+              <div class="p-4 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  </div>
+                  <div>
+                    <div class="font-medium text-navy-800">パテック・フィリップ ノーチラス</div>
+                    <div class="text-xs text-navy-500">腕時計</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="font-semibold text-gold-600">¥8,500,000</div>
+                </div>
+              </div>
+              <div class="p-4 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                  </div>
+                  <div>
+                    <div class="font-medium text-navy-800">エルメス バーキン30</div>
+                    <div class="text-xs text-navy-500">ブランドバッグ</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="font-semibold text-gold-600">¥3,200,000</div>
+                </div>
+              </div>
+              <div class="p-4 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                  </div>
+                  <div>
+                    <div class="font-medium text-navy-800">カルティエ ダイヤネックレス</div>
+                    <div class="text-xs text-navy-500">ジュエリー</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="font-semibold text-gold-600">¥2,800,000</div>
+                </div>
+              </div>
+              <div class="p-4 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  </div>
+                  <div>
+                    <div class="font-medium text-navy-800">ロレックス デイトナ</div>
+                    <div class="text-xs text-navy-500">腕時計</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="font-semibold text-gold-600">¥2,450,000</div>
+                </div>
+              </div>
+              <div class="p-4 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                  </div>
+                  <div>
+                    <div class="font-medium text-navy-800">シャネル クラシック フラップ</div>
+                    <div class="text-xs text-navy-500">ブランドバッグ</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="font-semibold text-gold-600">¥1,850,000</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+<script>
+    // Sales Chart
+    const ctx = document.getElementById('salesChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['1日', '5日', '10日', '15日', '20日', '25日', '31日'],
+        datasets: [{
+          label: '売上（百万円）',
+          data: [4.2, 6.8, 3.5, 9.2, 7.8, 10.5, 12.4],
+          borderColor: 'rgba(201, 162, 39, 1)',
+          backgroundColor: 'rgba(201, 162, 39, 0.1)',
+          borderWidth: 3,
+          fill: true,
+          tension: 0.4,
+          pointBackgroundColor: 'rgba(201, 162, 39, 1)',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          pointRadius: 5
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return '¥' + context.parsed.y + 'M';
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: function(value) {
+                return '¥' + value + 'M';
+              }
+            },
+            grid: {
+              color: 'rgba(0, 0, 0, 0.05)'
+            }
+          },
+          x: {
+            grid: {
+              display: false
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

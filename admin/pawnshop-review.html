@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>質屋審査 | KAIMAX Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: { 900: '#0A0F1C', 800: '#0F172A', 700: '#1E293B', 600: '#334155' },
+            gold: { 400: '#E5C158', 500: '#C9A227', 600: '#A88A1F' },
+            cream: { 50: '#FEFDFB', 100: '#FBF9F3', 200: '#F5F0E5' }
+          },
+          fontFamily: { 'display': ['Cormorant Garamond', 'serif'], 'sans': ['Noto Sans JP', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-gray-100 text-navy-800 antialiased">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-navy-900 flex-shrink-0">
+      <div class="p-6">
+        <a href="../public/top.html" class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+            <span class="font-display text-navy-900 text-xl font-bold">K</span>
+          </div>
+          <div>
+            <span class="font-display text-xl text-white tracking-wide block">KAIMAX</span>
+            <span class="text-xs text-gold-400">Admin</span>
+          </div>
+        </a>
+      </div>
+      <nav class="px-4 py-6 space-y-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          <span>ダッシュボード</span>
+        </a>
+        <div class="pt-4">
+          <div class="text-xs text-gray-500 px-4 mb-2 uppercase tracking-wider">ユーザー管理</div>
+          <a href="users.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            <span>消費者一覧</span>
+          </a>
+          <a href="pawnshops.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+            <span>質屋一覧</span>
+          </a>
+          <a href="pawnshop-review.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/10 text-gold-400 relative">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span class="font-medium">質屋審査</span>
+            <span class="ml-auto bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">5</span>
+          </a>
+        </div>
+        <div class="pt-4">
+          <div class="text-xs text-gray-500 px-4 mb-2 uppercase tracking-wider">取引・決済</div>
+          <a href="transactions.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+            <span>取引一覧</span>
+          </a>
+          <a href="deposits.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+            <span>入金管理</span>
+          </a>
+          <a href="withdrawals.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5 relative">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span>振込管理</span>
+            <span class="ml-auto bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full">12</span>
+          </a>
+          <a href="escrow.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+            <span>エスクロー残高</span>
+          </a>
+          <a href="disputes.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5 relative">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <span>紛争管理</span>
+            <span class="ml-auto bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">2</span>
+          </a>
+        </div>
+        <div class="pt-4">
+          <div class="text-xs text-gray-500 px-4 mb-2 uppercase tracking-wider">設定・レポート</div>
+          <a href="reports.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+            <span>レポート</span>
+          </a>
+          <a href="settings.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span>設定</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+      <header class="bg-white border-b border-gray-200 px-8 py-4">
+        <div class="flex items-center justify-between">
+          <h1 class="text-xl font-bold text-navy-800">質屋審査</h1>
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-navy-800 flex items-center justify-center">
+              <span class="text-gold-400 font-semibold">管</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="flex-1 p-8 overflow-auto">
+        <!-- Stats -->
+        <div class="grid grid-cols-4 gap-4 mb-6">
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="text-2xl font-bold text-yellow-600">5</div>
+            <div class="text-sm text-navy-500">審査待ち</div>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="text-2xl font-bold text-green-600">148</div>
+            <div class="text-sm text-navy-500">承認済み</div>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="text-2xl font-bold text-red-600">3</div>
+            <div class="text-sm text-navy-500">却下</div>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="text-2xl font-bold text-navy-800">2.4日</div>
+            <div class="text-sm text-navy-500">平均審査日数</div>
+          </div>
+        </div>
+
+        <!-- Pending Reviews -->
+        <div class="bg-white rounded-2xl shadow-sm mb-6">
+          <div class="px-6 py-4 border-b border-gray-100">
+            <h2 class="font-bold text-navy-800">審査待ち申請</h2>
+          </div>
+          <div class="divide-y divide-gray-100">
+            <!-- Review Item 1 -->
+            <div class="p-6">
+              <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center gap-4">
+                  <div class="w-14 h-14 rounded-xl bg-yellow-100 flex items-center justify-center">
+                    <span class="text-yellow-600 font-bold text-xl">松</span>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-navy-800 text-lg">松坂屋質店</h3>
+                    <p class="text-sm text-navy-500">申請日: 2024/01/10</p>
+                  </div>
+                </div>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+                  書類確認中
+                </span>
+              </div>
+
+              <div class="grid grid-cols-3 gap-6 mb-4">
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">代表者名</div>
+                  <div class="text-sm font-medium text-navy-800">松田 雄一</div>
+                </div>
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">所在地</div>
+                  <div class="text-sm font-medium text-navy-800">神奈川県横浜市中区</div>
+                </div>
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">古物商許可番号</div>
+                  <div class="text-sm font-medium text-navy-800">第123456789012号</div>
+                </div>
+              </div>
+
+              <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                <div class="text-xs text-navy-500 mb-2">提出書類</div>
+                <div class="flex flex-wrap gap-2">
+                  <span class="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-green-100 text-green-700 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    古物商許可証
+                  </span>
+                  <span class="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-green-100 text-green-700 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    登記簿謄本
+                  </span>
+                  <span class="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-green-100 text-green-700 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    本人確認書類
+                  </span>
+                  <span class="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-yellow-100 text-yellow-700 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    店舗写真（確認中）
+                  </span>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <button class="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white py-2.5 rounded-xl font-semibold text-sm hover:shadow-lg transition-all">承認する</button>
+                <button class="flex-1 bg-gray-100 text-navy-600 py-2.5 rounded-xl font-semibold text-sm hover:bg-gray-200 transition-all">追加情報を依頼</button>
+                <button class="flex-1 bg-red-50 text-red-600 py-2.5 rounded-xl font-semibold text-sm hover:bg-red-100 transition-all">却下する</button>
+              </div>
+            </div>
+
+            <!-- Review Item 2 -->
+            <div class="p-6">
+              <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center gap-4">
+                  <div class="w-14 h-14 rounded-xl bg-blue-100 flex items-center justify-center">
+                    <span class="text-blue-600 font-bold text-xl">銀</span>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-navy-800 text-lg">銀座質屋</h3>
+                    <p class="text-sm text-navy-500">申請日: 2024/01/12</p>
+                  </div>
+                </div>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+                  新規申請
+                </span>
+              </div>
+
+              <div class="grid grid-cols-3 gap-6 mb-4">
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">代表者名</div>
+                  <div class="text-sm font-medium text-navy-800">佐藤 美咲</div>
+                </div>
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">所在地</div>
+                  <div class="text-sm font-medium text-navy-800">東京都中央区銀座</div>
+                </div>
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">古物商許可番号</div>
+                  <div class="text-sm font-medium text-navy-800">第987654321098号</div>
+                </div>
+              </div>
+
+              <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                <div class="text-xs text-navy-500 mb-2">提出書類</div>
+                <div class="flex flex-wrap gap-2">
+                  <span class="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-green-100 text-green-700 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    古物商許可証
+                  </span>
+                  <span class="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-green-100 text-green-700 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    登記簿謄本
+                  </span>
+                  <span class="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-green-100 text-green-700 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    本人確認書類
+                  </span>
+                  <span class="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-green-100 text-green-700 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    店舗写真
+                  </span>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <button class="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white py-2.5 rounded-xl font-semibold text-sm hover:shadow-lg transition-all">承認する</button>
+                <button class="flex-1 bg-gray-100 text-navy-600 py-2.5 rounded-xl font-semibold text-sm hover:bg-gray-200 transition-all">追加情報を依頼</button>
+                <button class="flex-1 bg-red-50 text-red-600 py-2.5 rounded-xl font-semibold text-sm hover:bg-red-100 transition-all">却下する</button>
+              </div>
+            </div>
+
+            <!-- Review Item 3 -->
+            <div class="p-6">
+              <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center gap-4">
+                  <div class="w-14 h-14 rounded-xl bg-purple-100 flex items-center justify-center">
+                    <span class="text-purple-600 font-bold text-xl">宝</span>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-navy-800 text-lg">宝石堂</h3>
+                    <p class="text-sm text-navy-500">申請日: 2024/01/14</p>
+                  </div>
+                </div>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+                  書類不備
+                </span>
+              </div>
+
+              <div class="grid grid-cols-3 gap-6 mb-4">
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">代表者名</div>
+                  <div class="text-sm font-medium text-navy-800">山本 健一</div>
+                </div>
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">所在地</div>
+                  <div class="text-sm font-medium text-navy-800">大阪府大阪市北区</div>
+                </div>
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">古物商許可番号</div>
+                  <div class="text-sm font-medium text-navy-800">第567890123456号</div>
+                </div>
+              </div>
+
+              <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                <div class="text-xs text-navy-500 mb-2">提出書類</div>
+                <div class="flex flex-wrap gap-2">
+                  <span class="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-green-100 text-green-700 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    古物商許可証
+                  </span>
+                  <span class="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-red-100 text-red-700 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    登記簿謄本（期限切れ）
+                  </span>
+                  <span class="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-green-100 text-green-700 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    本人確認書類
+                  </span>
+                  <span class="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-gray-100 text-gray-700 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    店舗写真（未提出）
+                  </span>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <button class="flex-1 bg-gray-200 text-gray-400 py-2.5 rounded-xl font-semibold text-sm cursor-not-allowed" disabled>承認する</button>
+                <button class="flex-1 bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 py-2.5 rounded-xl font-semibold text-sm hover:shadow-lg transition-all">追加情報を依頼</button>
+                <button class="flex-1 bg-red-50 text-red-600 py-2.5 rounded-xl font-semibold text-sm hover:bg-red-100 transition-all">却下する</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Actions -->
+        <div class="bg-white rounded-2xl shadow-sm">
+          <div class="px-6 py-4 border-b border-gray-100">
+            <h2 class="font-bold text-navy-800">最近の審査履歴</h2>
+          </div>
+          <div class="divide-y divide-gray-100">
+            <div class="px-6 py-4 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                  <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <div>
+                  <span class="font-medium text-navy-800">鈴木質店</span>
+                  <span class="text-navy-500">を承認しました</span>
+                </div>
+              </div>
+              <span class="text-sm text-navy-400">2024/01/08 14:30</span>
+            </div>
+            <div class="px-6 py-4 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center">
+                  <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </div>
+                <div>
+                  <span class="font-medium text-navy-800">ABC商事</span>
+                  <span class="text-navy-500">を却下しました（許可証不正）</span>
+                </div>
+              </div>
+              <span class="text-sm text-navy-400">2024/01/07 10:15</span>
+            </div>
+            <div class="px-6 py-4 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                  <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <div>
+                  <span class="font-medium text-navy-800">大黒屋 新宿店</span>
+                  <span class="text-navy-500">を承認しました</span>
+                </div>
+              </div>
+              <span class="text-sm text-navy-400">2024/01/05 16:45</span>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

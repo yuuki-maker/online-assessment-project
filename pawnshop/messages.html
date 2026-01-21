@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>メッセージ | KAIMAX 質屋</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              900: '#0A0F1C',
+              800: '#0F172A',
+              700: '#1E293B',
+              600: '#334155',
+            },
+            gold: {
+              400: '#E5C158',
+              500: '#C9A227',
+              600: '#A88A1F',
+            },
+            cream: {
+              50: '#FEFDFB',
+              100: '#FBF9F3',
+              200: '#F5F0E5',
+            }
+          },
+          fontFamily: {
+            'display': ['Cormorant Garamond', 'Noto Serif JP', 'serif'],
+            'sans': ['Noto Sans JP', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-cream-50 text-navy-800 antialiased">
+  <!-- Header -->
+  <header class="bg-navy-900 border-b border-gold-500/20">
+    <nav class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="../public/top.html" class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+            <span class="font-display text-navy-900 text-xl font-bold">K</span>
+          </div>
+          <span class="font-display text-2xl text-white tracking-wide">KAIMAX</span>
+          <span class="text-xs text-cream-300 bg-white/10 px-2 py-1 rounded">質屋</span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-8">
+          <a href="dashboard.html" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">ダッシュボード</a>
+          <a href="products.html" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">商品一覧</a>
+          <a href="bids.html" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">入札中</a>
+          <a href="transactions.html" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">取引一覧</a>
+          <a href="messages.html" class="text-gold-400 transition-colors text-sm tracking-wide font-medium relative">
+            メッセージ
+            <span class="absolute -top-1 -right-2 w-4 h-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">3</span>
+          </a>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <button class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+            <svg class="w-5 h-5 text-cream-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+            </svg>
+          </button>
+          <div class="flex items-center gap-2">
+            <div class="w-10 h-10 rounded-full bg-navy-700 flex items-center justify-center">
+              <span class="text-gold-400 font-semibold">鈴</span>
+            </div>
+            <span class="text-cream-100 text-sm hidden md:block">鈴木質店</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-8">
+    <div class="bg-white rounded-2xl shadow-sm overflow-hidden" style="height: calc(100vh - 180px);">
+      <div class="flex h-full">
+        <!-- Conversation List -->
+        <div class="w-80 border-r border-gray-100 flex flex-col">
+          <div class="p-4 border-b border-gray-100">
+            <h2 class="font-bold text-navy-800 mb-3">メッセージ</h2>
+            <div class="relative">
+              <input type="text" placeholder="会話を検索..." class="w-full px-4 py-2 pl-10 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all outline-none text-sm">
+              <svg class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+            </div>
+          </div>
+
+          <div class="flex-1 overflow-y-auto">
+            <!-- Conversation Item - Active -->
+            <div class="p-4 bg-gold-50 border-l-4 border-gold-500 cursor-pointer">
+              <div class="flex items-start gap-3">
+                <div class="w-12 h-12 rounded-full bg-navy-100 flex items-center justify-center flex-shrink-0">
+                  <span class="text-navy-600 font-semibold">山</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-semibold text-navy-800 text-sm">山田 太郎</span>
+                    <span class="text-xs text-navy-400">10分前</span>
+                  </div>
+                  <p class="text-sm text-navy-600 truncate">発送手続きが完了しました。追跡番号...</p>
+                  <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded mt-1">ヴィトン ポルトフォイユ</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Conversation Item - Unread -->
+            <div class="p-4 hover:bg-cream-50 cursor-pointer transition-colors border-b border-gray-50">
+              <div class="flex items-start gap-3">
+                <div class="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center flex-shrink-0 relative">
+                  <span class="text-pink-600 font-semibold">佐</span>
+                  <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">2</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-semibold text-navy-800 text-sm">佐藤 花子</span>
+                    <span class="text-xs text-navy-400">1時間前</span>
+                  </div>
+                  <p class="text-sm text-navy-800 font-medium truncate">商品の状態について質問があります</p>
+                  <span class="inline-block bg-purple-100 text-purple-700 text-xs px-2 py-0.5 rounded mt-1">ロレックス デイトジャスト</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Conversation Item - Unread -->
+            <div class="p-4 hover:bg-cream-50 cursor-pointer transition-colors border-b border-gray-50">
+              <div class="flex items-start gap-3">
+                <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 relative">
+                  <span class="text-green-600 font-semibold">田</span>
+                  <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">1</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-semibold text-navy-800 text-sm">田中 一郎</span>
+                    <span class="text-xs text-navy-400">3時間前</span>
+                  </div>
+                  <p class="text-sm text-navy-800 font-medium truncate">付属品についてお聞きしたいのですが</p>
+                  <span class="inline-block bg-pink-100 text-pink-700 text-xs px-2 py-0.5 rounded mt-1">ダイヤモンドリング</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Conversation Item -->
+            <div class="p-4 hover:bg-cream-50 cursor-pointer transition-colors border-b border-gray-50">
+              <div class="flex items-start gap-3">
+                <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
+                  <span class="text-orange-600 font-semibold">鈴</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-semibold text-navy-800 text-sm">鈴木 美咲</span>
+                    <span class="text-xs text-navy-400">昨日</span>
+                  </div>
+                  <p class="text-sm text-navy-500 truncate">ありがとうございました！</p>
+                  <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded mt-1">グッチ GGマーモント</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Conversation Item -->
+            <div class="p-4 hover:bg-cream-50 cursor-pointer transition-colors border-b border-gray-50">
+              <div class="flex items-start gap-3">
+                <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+                  <span class="text-purple-600 font-semibold">伊</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-semibold text-navy-800 text-sm">伊藤 健太</span>
+                    <span class="text-xs text-navy-400">1/15</span>
+                  </div>
+                  <p class="text-sm text-navy-500 truncate">取引完了のお礼申し上げます</p>
+                  <span class="inline-block bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded mt-1">取引完了</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="flex-1 flex flex-col">
+          <!-- Chat Header -->
+          <div class="p-4 border-b border-gray-100 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-navy-100 flex items-center justify-center">
+                <span class="text-navy-600 font-semibold">山</span>
+              </div>
+              <div>
+                <h3 class="font-semibold text-navy-800">山田 太郎</h3>
+                <p class="text-xs text-navy-500">ヴィトン ポルトフォイユ・ヴィクトリーヌ | 取引中</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <a href="transactions.html" class="px-3 py-1.5 text-sm text-gold-600 hover:bg-gold-50 rounded-lg transition-colors">
+                取引詳細
+              </a>
+            </div>
+          </div>
+
+          <!-- Messages -->
+          <div class="flex-1 overflow-y-auto p-6 space-y-4 bg-cream-50">
+            <!-- System Message -->
+            <div class="flex justify-center">
+              <span class="bg-white text-navy-500 text-xs px-3 py-1 rounded-full shadow-sm">2024年1月15日</span>
+            </div>
+
+            <!-- Received Message -->
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-full bg-navy-100 flex items-center justify-center flex-shrink-0">
+                <span class="text-navy-600 text-sm font-semibold">山</span>
+              </div>
+              <div class="max-w-md">
+                <div class="bg-white rounded-2xl rounded-tl-none p-4 shadow-sm">
+                  <p class="text-navy-700 text-sm">こんにちは。入札いただきありがとうございます。商品についてご質問があればお気軽にどうぞ。</p>
+                </div>
+                <span class="text-xs text-navy-400 mt-1 block">14:30</span>
+              </div>
+            </div>
+
+            <!-- Sent Message -->
+            <div class="flex items-start gap-3 justify-end">
+              <div class="max-w-md">
+                <div class="bg-gradient-to-r from-gold-400 to-gold-500 rounded-2xl rounded-tr-none p-4 shadow-sm">
+                  <p class="text-navy-900 text-sm">ご連絡ありがとうございます。付属品の保存袋は購入時のものでしょうか？</p>
+                </div>
+                <span class="text-xs text-navy-400 mt-1 block text-right">14:35</span>
+              </div>
+            </div>
+
+            <!-- Received Message -->
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-full bg-navy-100 flex items-center justify-center flex-shrink-0">
+                <span class="text-navy-600 text-sm font-semibold">山</span>
+              </div>
+              <div class="max-w-md">
+                <div class="bg-white rounded-2xl rounded-tl-none p-4 shadow-sm">
+                  <p class="text-navy-700 text-sm">はい、購入時の正規品です。ギャランティカードも一緒にお付けいたします。</p>
+                </div>
+                <span class="text-xs text-navy-400 mt-1 block">14:40</span>
+              </div>
+            </div>
+
+            <!-- Sent Message -->
+            <div class="flex items-start gap-3 justify-end">
+              <div class="max-w-md">
+                <div class="bg-gradient-to-r from-gold-400 to-gold-500 rounded-2xl rounded-tr-none p-4 shadow-sm">
+                  <p class="text-navy-900 text-sm">承知しました。落札させていただきましたので、支払い手続きを進めます。</p>
+                </div>
+                <span class="text-xs text-navy-400 mt-1 block text-right">15:00</span>
+              </div>
+            </div>
+
+            <!-- System Message -->
+            <div class="flex justify-center">
+              <span class="bg-white text-navy-500 text-xs px-3 py-1 rounded-full shadow-sm">本日</span>
+            </div>
+
+            <!-- Received Message -->
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-full bg-navy-100 flex items-center justify-center flex-shrink-0">
+                <span class="text-navy-600 text-sm font-semibold">山</span>
+              </div>
+              <div class="max-w-md">
+                <div class="bg-white rounded-2xl rounded-tl-none p-4 shadow-sm">
+                  <p class="text-navy-700 text-sm">発送手続きが完了しました。追跡番号は1234-5678-9012です。到着まで2〜3日かかる見込みです。</p>
+                </div>
+                <span class="text-xs text-navy-400 mt-1 block">10:15</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Message Input -->
+          <div class="p-4 border-t border-gray-100 bg-white">
+            <div class="flex items-end gap-3">
+              <button class="w-10 h-10 rounded-full bg-cream-100 flex items-center justify-center hover:bg-cream-200 transition-colors flex-shrink-0">
+                <svg class="w-5 h-5 text-navy-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
+                </svg>
+              </button>
+              <div class="flex-1 relative">
+                <textarea
+                  rows="1"
+                  placeholder="メッセージを入力..."
+                  class="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all outline-none text-sm resize-none"
+                ></textarea>
+              </div>
+              <button class="w-10 h-10 rounded-full bg-gradient-to-r from-gold-400 to-gold-600 flex items-center justify-center hover:shadow-lg transition-all flex-shrink-0">
+                <svg class="w-5 h-5 text-navy-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

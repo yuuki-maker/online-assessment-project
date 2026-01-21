@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>消費者詳細 | KAIMAX Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: { 900: '#0A0F1C', 800: '#0F172A', 700: '#1E293B', 600: '#334155' },
+            gold: { 400: '#E5C158', 500: '#C9A227', 600: '#A88A1F' },
+            cream: { 50: '#FEFDFB', 100: '#FBF9F3', 200: '#F5F0E5' }
+          },
+          fontFamily: { 'display': ['Cormorant Garamond', 'serif'], 'sans': ['Noto Sans JP', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-gray-100 text-navy-800 antialiased">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-navy-900 flex-shrink-0">
+      <div class="p-6">
+        <a href="../public/top.html" class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+            <span class="font-display text-navy-900 text-xl font-bold">K</span>
+          </div>
+          <div>
+            <span class="font-display text-xl text-white tracking-wide block">KAIMAX</span>
+            <span class="text-xs text-gold-400">Admin</span>
+          </div>
+        </a>
+      </div>
+      <nav class="px-4 py-6 space-y-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          <span>ダッシュボード</span>
+        </a>
+        <div class="pt-4">
+          <div class="text-xs text-gray-500 px-4 mb-2 uppercase tracking-wider">ユーザー管理</div>
+          <a href="users.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/10 text-gold-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            <span class="font-medium">消費者一覧</span>
+          </a>
+          <a href="pawnshops.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+            <span>質屋一覧</span>
+          </a>
+          <a href="pawnshop-review.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5 relative">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span>質屋審査</span>
+            <span class="ml-auto bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">5</span>
+          </a>
+        </div>
+        <div class="pt-4">
+          <div class="text-xs text-gray-500 px-4 mb-2 uppercase tracking-wider">取引・決済</div>
+          <a href="transactions.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+            <span>取引一覧</span>
+          </a>
+          <a href="deposits.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+            <span>入金管理</span>
+          </a>
+          <a href="withdrawals.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5 relative">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span>振込管理</span>
+            <span class="ml-auto bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full">12</span>
+          </a>
+          <a href="escrow.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+            <span>エスクロー残高</span>
+          </a>
+          <a href="disputes.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5 relative">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <span>紛争管理</span>
+            <span class="ml-auto bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">2</span>
+          </a>
+        </div>
+        <div class="pt-4">
+          <div class="text-xs text-gray-500 px-4 mb-2 uppercase tracking-wider">設定・レポート</div>
+          <a href="reports.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+            <span>レポート</span>
+          </a>
+          <a href="settings.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span>設定</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+      <header class="bg-white border-b border-gray-200 px-8 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <a href="users.html" class="text-navy-500 hover:text-navy-700">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </a>
+            <h1 class="text-xl font-bold text-navy-800">消費者詳細</h1>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-navy-800 flex items-center justify-center">
+              <span class="text-gold-400 font-semibold">管</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="flex-1 p-8 overflow-auto">
+        <!-- User Header -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm mb-6">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center gap-6">
+              <div class="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center">
+                <span class="text-blue-600 font-bold text-2xl">山</span>
+              </div>
+              <div>
+                <div class="flex items-center gap-3 mb-2">
+                  <h2 class="text-2xl font-bold text-navy-800">山田 太郎</h2>
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">アクティブ</span>
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">本人確認済み</span>
+                </div>
+                <div class="text-navy-500 space-y-1">
+                  <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    <span>yamada@example.com</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                    <span>090-1234-5678</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span>登録日: 2024/01/05</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <button class="px-4 py-2 rounded-xl border border-gray-200 text-navy-600 hover:bg-gray-50 text-sm font-medium">メール送信</button>
+              <button class="px-4 py-2 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 text-sm font-medium">利用停止</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-6">
+          <!-- Left Column -->
+          <div class="col-span-2 space-y-6">
+            <!-- Stats -->
+            <div class="grid grid-cols-4 gap-4">
+              <div class="bg-white rounded-xl p-4 shadow-sm">
+                <div class="text-2xl font-bold text-navy-800">12</div>
+                <div class="text-sm text-navy-500">総取引数</div>
+              </div>
+              <div class="bg-white rounded-xl p-4 shadow-sm">
+                <div class="text-2xl font-bold text-green-600">¥1,245,000</div>
+                <div class="text-sm text-navy-500">総取引金額</div>
+              </div>
+              <div class="bg-white rounded-xl p-4 shadow-sm">
+                <div class="text-2xl font-bold text-gold-600">¥37,350</div>
+                <div class="text-sm text-navy-500">支払手数料</div>
+              </div>
+              <div class="bg-white rounded-xl p-4 shadow-sm">
+                <div class="text-2xl font-bold text-blue-600">4.8</div>
+                <div class="text-sm text-navy-500">平均評価</div>
+              </div>
+            </div>
+
+            <!-- Transaction History -->
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+              <div class="p-6 border-b border-gray-100">
+                <h3 class="font-bold text-navy-800">取引履歴</h3>
+              </div>
+              <table class="w-full">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th class="text-left text-xs text-navy-500 font-medium px-6 py-3">取引ID</th>
+                    <th class="text-left text-xs text-navy-500 font-medium px-6 py-3">商品</th>
+                    <th class="text-left text-xs text-navy-500 font-medium px-6 py-3">金額</th>
+                    <th class="text-left text-xs text-navy-500 font-medium px-6 py-3">ステータス</th>
+                    <th class="text-left text-xs text-navy-500 font-medium px-6 py-3">日時</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-50">
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-sm font-mono text-navy-600">#TXN-2847</td>
+                    <td class="px-6 py-4 text-sm text-navy-800">ルイ・ヴィトン ネヴァーフル</td>
+                    <td class="px-6 py-4 text-sm font-semibold text-navy-800">¥92,000</td>
+                    <td class="px-6 py-4"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">完了</span></td>
+                    <td class="px-6 py-4 text-sm text-navy-500">2024/01/15</td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-sm font-mono text-navy-600">#TXN-2756</td>
+                    <td class="px-6 py-4 text-sm text-navy-800">エルメス ケリー28</td>
+                    <td class="px-6 py-4 text-sm font-semibold text-navy-800">¥580,000</td>
+                    <td class="px-6 py-4"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">完了</span></td>
+                    <td class="px-6 py-4 text-sm text-navy-500">2024/01/10</td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-sm font-mono text-navy-600">#TXN-2698</td>
+                    <td class="px-6 py-4 text-sm text-navy-800">ロレックス デイトナ</td>
+                    <td class="px-6 py-4 text-sm font-semibold text-navy-800">¥285,000</td>
+                    <td class="px-6 py-4"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">完了</span></td>
+                    <td class="px-6 py-4 text-sm text-navy-500">2024/01/08</td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-sm font-mono text-navy-600">#TXN-2654</td>
+                    <td class="px-6 py-4 text-sm text-navy-800">カルティエ ラブリング</td>
+                    <td class="px-6 py-4 text-sm font-semibold text-navy-800">¥145,000</td>
+                    <td class="px-6 py-4"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">紛争中</span></td>
+                    <td class="px-6 py-4 text-sm text-navy-500">2024/01/06</td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-sm font-mono text-navy-600">#TXN-2589</td>
+                    <td class="px-6 py-4 text-sm text-navy-800">グッチ GGマーモント</td>
+                    <td class="px-6 py-4 text-sm font-semibold text-navy-800">¥78,000</td>
+                    <td class="px-6 py-4"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">完了</span></td>
+                    <td class="px-6 py-4 text-sm text-navy-500">2024/01/05</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="px-6 py-4 border-t border-gray-100 text-center">
+                <a href="#" class="text-gold-600 hover:text-gold-700 text-sm font-medium">すべての取引を見る</a>
+              </div>
+            </div>
+
+            <!-- Activity Log -->
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+              <div class="p-6 border-b border-gray-100">
+                <h3 class="font-bold text-navy-800">アクティビティログ</h3>
+              </div>
+              <div class="p-6 space-y-4">
+                <div class="flex items-start gap-4">
+                  <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  </div>
+                  <div class="flex-1">
+                    <div class="text-sm font-medium text-navy-800">取引完了 #TXN-2847</div>
+                    <div class="text-xs text-navy-500">2024/01/15 14:30</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  </div>
+                  <div class="flex-1">
+                    <div class="text-sm font-medium text-navy-800">入金確認 ¥92,000</div>
+                    <div class="text-xs text-navy-500">2024/01/14 10:15</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <div class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-4 h-4 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                  </div>
+                  <div class="flex-1">
+                    <div class="text-sm font-medium text-navy-800">紛争申請 #TXN-2654</div>
+                    <div class="text-xs text-navy-500">2024/01/10 09:45</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  </div>
+                  <div class="flex-1">
+                    <div class="text-sm font-medium text-navy-800">本人確認完了</div>
+                    <div class="text-xs text-navy-500">2024/01/06 11:20</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <div class="w-8 h-8 rounded-full bg-navy-100 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-4 h-4 text-navy-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
+                  </div>
+                  <div class="flex-1">
+                    <div class="text-sm font-medium text-navy-800">アカウント登録</div>
+                    <div class="text-xs text-navy-500">2024/01/05 08:00</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="space-y-6">
+            <!-- Basic Info -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+              <h3 class="font-bold text-navy-800 mb-4">基本情報</h3>
+              <div class="space-y-4">
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">ユーザーID</div>
+                  <div class="text-sm font-mono text-navy-800">USR-2024010523</div>
+                </div>
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">氏名（カナ）</div>
+                  <div class="text-sm text-navy-800">ヤマダ タロウ</div>
+                </div>
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">生年月日</div>
+                  <div class="text-sm text-navy-800">1985/03/15</div>
+                </div>
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">住所</div>
+                  <div class="text-sm text-navy-800">〒150-0001<br>東京都渋谷区神宮前3-1-1<br>メゾン青山 205号室</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Verification Info -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+              <h3 class="font-bold text-navy-800 mb-4">本人確認情報</h3>
+              <div class="space-y-4">
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">確認書類</div>
+                  <div class="text-sm text-navy-800">運転免許証</div>
+                </div>
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">確認日時</div>
+                  <div class="text-sm text-navy-800">2024/01/06 11:20</div>
+                </div>
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">確認ステータス</div>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">確認済み</span>
+                </div>
+                <button class="w-full text-center text-gold-600 hover:text-gold-700 text-sm font-medium border border-gold-200 rounded-xl py-2">確認書類を表示</button>
+              </div>
+            </div>
+
+            <!-- Bank Account -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+              <h3 class="font-bold text-navy-800 mb-4">振込先口座</h3>
+              <div class="space-y-4">
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">金融機関</div>
+                  <div class="text-sm text-navy-800">三菱UFJ銀行</div>
+                </div>
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">支店名</div>
+                  <div class="text-sm text-navy-800">渋谷支店 (123)</div>
+                </div>
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">口座種別</div>
+                  <div class="text-sm text-navy-800">普通</div>
+                </div>
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">口座番号</div>
+                  <div class="text-sm font-mono text-navy-800">1234567</div>
+                </div>
+                <div>
+                  <div class="text-xs text-navy-500 mb-1">口座名義</div>
+                  <div class="text-sm text-navy-800">ヤマダ タロウ</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Admin Actions -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+              <h3 class="font-bold text-navy-800 mb-4">管理操作</h3>
+              <div class="space-y-3">
+                <button class="w-full text-left px-4 py-3 rounded-xl bg-cream-50 hover:bg-cream-100 text-navy-700 text-sm font-medium flex items-center justify-between">
+                  <span>パスワードリセット</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+                <button class="w-full text-left px-4 py-3 rounded-xl bg-cream-50 hover:bg-cream-100 text-navy-700 text-sm font-medium flex items-center justify-between">
+                  <span>メールアドレス変更</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+                <button class="w-full text-left px-4 py-3 rounded-xl bg-cream-50 hover:bg-cream-100 text-navy-700 text-sm font-medium flex items-center justify-between">
+                  <span>本人確認再審査</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+                <button class="w-full text-left px-4 py-3 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 text-sm font-medium flex items-center justify-between">
+                  <span>アカウント削除</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>売上金管理 | KAIMAX</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              900: '#0A0F1C',
+              800: '#0F172A',
+              700: '#1E293B',
+              600: '#334155',
+            },
+            gold: {
+              400: '#E5C158',
+              500: '#C9A227',
+              600: '#A88A1F',
+            },
+            cream: {
+              50: '#FEFDFB',
+              100: '#FBF9F3',
+              200: '#F5F0E5',
+            }
+          },
+          fontFamily: {
+            'display': ['Cormorant Garamond', 'Noto Serif JP', 'serif'],
+            'sans': ['Noto Sans JP', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-cream-50 text-navy-800 antialiased">
+  <!-- Header -->
+  <header class="bg-navy-900 border-b border-gold-500/20">
+    <nav class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="../public/top.html" class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+            <span class="font-display text-navy-900 text-xl font-bold">K</span>
+          </div>
+          <span class="font-display text-2xl text-white tracking-wide">KAIMAX</span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-8">
+          <a href="mypage.html" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">マイページ</a>
+          <a href="products-new.html" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">出品する</a>
+          <a href="products.html" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">出品商品</a>
+          <a href="transactions.html" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">取引一覧</a>
+          <a href="messages.html" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide relative">
+            メッセージ
+            <span class="absolute -top-1 -right-2 w-4 h-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">2</span>
+          </a>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <button class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+            <svg class="w-5 h-5 text-cream-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+            </svg>
+          </button>
+          <div class="flex items-center gap-2">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center">
+              <span class="text-navy-900 font-semibold">山</span>
+            </div>
+            <span class="text-cream-100 text-sm hidden md:block">山田太郎</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-6 py-8">
+    <!-- Breadcrumb -->
+    <div class="mb-6">
+      <a href="mypage.html" class="inline-flex items-center gap-2 text-navy-500 hover:text-navy-700 transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        マイページに戻る
+      </a>
+    </div>
+
+    <!-- Page Header -->
+    <div class="mb-8">
+      <h1 class="text-2xl font-bold text-navy-800 mb-2">売上金管理</h1>
+      <p class="text-navy-600">売上金の残高確認と振込申請ができます</p>
+    </div>
+
+    <!-- Balance Card -->
+    <div class="bg-gradient-to-br from-navy-800 to-navy-900 rounded-3xl p-8 mb-8 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-64 h-64 bg-gold-500/10 rounded-full blur-3xl"></div>
+      <div class="relative">
+        <p class="text-cream-200 mb-2">現在の売上金残高</p>
+        <p class="text-5xl font-bold text-white mb-6">¥125,000</p>
+        <div class="flex gap-4">
+          <button class="bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 px-8 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-gold-500/30 transition-all">
+            振込申請
+          </button>
+          <button class="border border-white/30 text-white px-8 py-3 rounded-xl font-medium hover:bg-white/10 transition-colors">
+            振込先を変更
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bank Account Info -->
+    <div class="bg-white rounded-2xl shadow-sm p-6 mb-8">
+      <h2 class="text-lg font-bold text-navy-800 mb-4">振込先口座</h2>
+      <div class="bg-cream-100 rounded-xl p-4">
+        <dl class="grid grid-cols-2 gap-4 text-sm">
+          <div>
+            <dt class="text-navy-500 mb-1">金融機関</dt>
+            <dd class="font-medium text-navy-800">三菱UFJ銀行</dd>
+          </div>
+          <div>
+            <dt class="text-navy-500 mb-1">支店名</dt>
+            <dd class="font-medium text-navy-800">渋谷支店</dd>
+          </div>
+          <div>
+            <dt class="text-navy-500 mb-1">口座種別</dt>
+            <dd class="font-medium text-navy-800">普通</dd>
+          </div>
+          <div>
+            <dt class="text-navy-500 mb-1">口座番号</dt>
+            <dd class="font-medium text-navy-800">1234567</dd>
+          </div>
+          <div class="col-span-2">
+            <dt class="text-navy-500 mb-1">口座名義</dt>
+            <dd class="font-medium text-navy-800">ヤマダ タロウ</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <!-- Transaction History -->
+    <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+      <div class="p-6 border-b border-gray-100">
+        <h2 class="text-lg font-bold text-navy-800">入出金履歴</h2>
+      </div>
+
+      <div class="divide-y divide-gray-100">
+        <!-- Entry 1 - 入金 -->
+        <div class="p-6 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="font-medium text-navy-800">売上入金</p>
+              <p class="text-sm text-navy-500">プラダ サフィアーノ 長財布</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="font-bold text-green-600">+¥42,000</p>
+            <p class="text-xs text-navy-500">2024/01/05</p>
+          </div>
+        </div>
+
+        <!-- Entry 2 - 振込 -->
+        <div class="p-6 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="font-medium text-navy-800">振込出金</p>
+              <p class="text-sm text-navy-500">三菱UFJ銀行 渋谷支店</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="font-bold text-navy-700">-¥50,000</p>
+            <p class="text-xs text-navy-500">2024/01/03</p>
+          </div>
+        </div>
+
+        <!-- Entry 3 - 入金 -->
+        <div class="p-6 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="font-medium text-navy-800">売上入金</p>
+              <p class="text-sm text-navy-500">バーバリー チェックストール カシミヤ</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="font-bold text-green-600">+¥25,000</p>
+            <p class="text-xs text-navy-500">2023/12/28</p>
+          </div>
+        </div>
+
+        <!-- Entry 4 - 入金 -->
+        <div class="p-6 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="font-medium text-navy-800">売上入金</p>
+              <p class="text-sm text-navy-500">コーチ シグネチャー トートバッグ</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="font-bold text-green-600">+¥18,000</p>
+            <p class="text-xs text-navy-500">2023/12/20</p>
+          </div>
+        </div>
+
+        <!-- Entry 5 - 振込 -->
+        <div class="p-6 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="font-medium text-navy-800">振込出金</p>
+              <p class="text-sm text-navy-500">三菱UFJ銀行 渋谷支店</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="font-bold text-navy-700">-¥30,000</p>
+            <p class="text-xs text-navy-500">2023/12/15</p>
+          </div>
+        </div>
+
+        <!-- Entry 6 - 入金 -->
+        <div class="p-6 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="font-medium text-navy-800">売上入金</p>
+              <p class="text-sm text-navy-500">グッチ ベルト レザー</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="font-bold text-green-600">+¥35,000</p>
+            <p class="text-xs text-navy-500">2023/12/10</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 border-t border-gray-100 text-center">
+        <button class="text-gold-600 hover:text-gold-700 font-medium text-sm">
+          さらに読み込む
+        </button>
+      </div>
+    </div>
+
+    <!-- Info Box -->
+    <div class="mt-8 bg-cream-100 rounded-2xl p-6">
+      <div class="flex items-start gap-4">
+        <div class="w-10 h-10 bg-gold-400/20 rounded-full flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <div>
+          <h4 class="font-semibold text-navy-800 mb-1">振込について</h4>
+          <ul class="text-sm text-navy-600 space-y-1">
+            <li>・振込手数料は一律200円です</li>
+            <li>・振込申請から1〜3営業日で入金されます</li>
+            <li>・最低振込金額は1,000円からです</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-gray-100 mt-12">
+    <div class="max-w-7xl mx-auto px-6 py-8">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+            <span class="font-display text-navy-900 text-sm font-bold">K</span>
+          </div>
+          <span class="font-display text-lg text-navy-800">KAIMAX</span>
+        </div>
+        <p class="text-sm text-navy-500">&copy; 2024 KAIMAX. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

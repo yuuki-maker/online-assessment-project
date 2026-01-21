@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>出品商品一覧 | KAIMAX</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              900: '#0A0F1C',
+              800: '#0F172A',
+              700: '#1E293B',
+              600: '#334155',
+            },
+            gold: {
+              400: '#E5C158',
+              500: '#C9A227',
+              600: '#A88A1F',
+            },
+            cream: {
+              50: '#FEFDFB',
+              100: '#FBF9F3',
+              200: '#F5F0E5',
+            }
+          },
+          fontFamily: {
+            'display': ['Cormorant Garamond', 'Noto Serif JP', 'serif'],
+            'sans': ['Noto Sans JP', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-cream-50 text-navy-800 antialiased">
+  <!-- Header -->
+  <header class="bg-navy-900 border-b border-gold-500/20">
+    <nav class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="../public/top.html" class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+            <span class="font-display text-navy-900 text-xl font-bold">K</span>
+          </div>
+          <span class="font-display text-2xl text-white tracking-wide">KAIMAX</span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-8">
+          <a href="mypage.html" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">マイページ</a>
+          <a href="products-new.html" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">出品する</a>
+          <a href="products.html" class="text-gold-400 transition-colors text-sm tracking-wide font-medium">出品商品</a>
+          <a href="transactions.html" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">取引一覧</a>
+          <a href="messages.html" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide relative">
+            メッセージ
+            <span class="absolute -top-1 -right-2 w-4 h-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">2</span>
+          </a>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <button class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+            <svg class="w-5 h-5 text-cream-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+            </svg>
+          </button>
+          <div class="flex items-center gap-2">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center">
+              <span class="text-navy-900 font-semibold">山</span>
+            </div>
+            <span class="text-cream-100 text-sm hidden md:block">山田太郎</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-8">
+    <!-- Page Header -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-2xl font-bold text-navy-800 mb-2">出品商品一覧</h1>
+        <p class="text-navy-600">出品した商品の入札状況を確認できます</p>
+      </div>
+      <a href="products-new.html" class="bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-gold-500/30 transition-all flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        新規出品
+      </a>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="flex gap-2 mb-6 border-b border-gray-200">
+      <button class="px-4 py-3 text-gold-600 border-b-2 border-gold-500 font-medium">すべて (8)</button>
+      <button class="px-4 py-3 text-navy-500 hover:text-navy-700">入札受付中 (3)</button>
+      <button class="px-4 py-3 text-navy-500 hover:text-navy-700">入札あり (2)</button>
+      <button class="px-4 py-3 text-navy-500 hover:text-navy-700">成約済み (2)</button>
+      <button class="px-4 py-3 text-navy-500 hover:text-navy-700">終了 (1)</button>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Product Card 1 - 入札あり -->
+      <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+        <div class="relative">
+          <div class="aspect-square bg-gray-100 flex items-center justify-center">
+            <svg class="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <span class="absolute top-3 left-3 bg-gold-500 text-white text-xs px-3 py-1 rounded-full font-medium">入札あり</span>
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold text-navy-800 mb-2">ルイ・ヴィトン モノグラム ネヴァーフル MM</h3>
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <p class="text-xs text-navy-500">現在の最高入札</p>
+              <p class="text-xl font-bold text-gold-600">¥85,000</p>
+            </div>
+            <div class="text-right">
+              <p class="text-xs text-navy-500">入札数</p>
+              <p class="text-lg font-semibold text-navy-800">5件</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-sm text-navy-500 mb-4">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            残り 2日 14時間
+          </div>
+          <a href="product-detail.html" class="block w-full text-center bg-navy-800 text-white py-3 rounded-xl hover:bg-navy-700 transition-colors font-medium">
+            入札を確認
+          </a>
+        </div>
+      </div>
+
+      <!-- Product Card 2 - 入札あり -->
+      <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+        <div class="relative">
+          <div class="aspect-square bg-gray-100 flex items-center justify-center">
+            <svg class="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <span class="absolute top-3 left-3 bg-gold-500 text-white text-xs px-3 py-1 rounded-full font-medium">入札あり</span>
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold text-navy-800 mb-2">ロレックス デイトジャスト 16233</h3>
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <p class="text-xs text-navy-500">現在の最高入札</p>
+              <p class="text-xl font-bold text-gold-600">¥420,000</p>
+            </div>
+            <div class="text-right">
+              <p class="text-xs text-navy-500">入札数</p>
+              <p class="text-lg font-semibold text-navy-800">8件</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-sm text-navy-500 mb-4">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            残り 5日 8時間
+          </div>
+          <a href="product-detail.html" class="block w-full text-center bg-navy-800 text-white py-3 rounded-xl hover:bg-navy-700 transition-colors font-medium">
+            入札を確認
+          </a>
+        </div>
+      </div>
+
+      <!-- Product Card 3 - 入札受付中 -->
+      <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+        <div class="relative">
+          <div class="aspect-square bg-gray-100 flex items-center justify-center">
+            <svg class="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <span class="absolute top-3 left-3 bg-blue-500 text-white text-xs px-3 py-1 rounded-full font-medium">入札受付中</span>
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold text-navy-800 mb-2">エルメス カレ90 シルクスカーフ</h3>
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <p class="text-xs text-navy-500">希望価格</p>
+              <p class="text-xl font-bold text-navy-700">¥35,000</p>
+            </div>
+            <div class="text-right">
+              <p class="text-xs text-navy-500">入札数</p>
+              <p class="text-lg font-semibold text-navy-800">0件</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-sm text-navy-500 mb-4">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            残り 6日 20時間
+          </div>
+          <a href="product-detail.html" class="block w-full text-center border border-navy-300 text-navy-700 py-3 rounded-xl hover:bg-navy-50 transition-colors font-medium">
+            詳細を見る
+          </a>
+        </div>
+      </div>
+
+      <!-- Product Card 4 - 成約済み -->
+      <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+        <div class="relative">
+          <div class="aspect-square bg-gray-100 flex items-center justify-center">
+            <svg class="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <span class="absolute top-3 left-3 bg-green-500 text-white text-xs px-3 py-1 rounded-full font-medium">成約済み</span>
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold text-navy-800 mb-2">シャネル マトラッセ チェーンウォレット</h3>
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <p class="text-xs text-navy-500">成約価格</p>
+              <p class="text-xl font-bold text-green-600">¥180,000</p>
+            </div>
+            <div class="text-right">
+              <p class="text-xs text-navy-500">落札店舗</p>
+              <p class="text-sm font-medium text-navy-800">鈴木質店</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-sm text-green-600 mb-4">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            2024/01/15 成約
+          </div>
+          <a href="transactions.html" class="block w-full text-center bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition-colors font-medium">
+            取引詳細へ
+          </a>
+        </div>
+      </div>
+
+      <!-- Product Card 5 - 入札受付中 -->
+      <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+        <div class="relative">
+          <div class="aspect-square bg-gray-100 flex items-center justify-center">
+            <svg class="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <span class="absolute top-3 left-3 bg-blue-500 text-white text-xs px-3 py-1 rounded-full font-medium">入札受付中</span>
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold text-navy-800 mb-2">カルティエ ラブブレス K18PG</h3>
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <p class="text-xs text-navy-500">希望価格</p>
+              <p class="text-xl font-bold text-navy-700">¥350,000</p>
+            </div>
+            <div class="text-right">
+              <p class="text-xs text-navy-500">入札数</p>
+              <p class="text-lg font-semibold text-navy-800">0件</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-sm text-navy-500 mb-4">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            残り 4日 12時間
+          </div>
+          <a href="product-detail.html" class="block w-full text-center border border-navy-300 text-navy-700 py-3 rounded-xl hover:bg-navy-50 transition-colors font-medium">
+            詳細を見る
+          </a>
+        </div>
+      </div>
+
+      <!-- Product Card 6 - 成約済み -->
+      <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+        <div class="relative">
+          <div class="aspect-square bg-gray-100 flex items-center justify-center">
+            <svg class="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <span class="absolute top-3 left-3 bg-green-500 text-white text-xs px-3 py-1 rounded-full font-medium">成約済み</span>
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold text-navy-800 mb-2">グッチ GGマーモント ミニバッグ</h3>
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <p class="text-xs text-navy-500">成約価格</p>
+              <p class="text-xl font-bold text-green-600">¥65,000</p>
+            </div>
+            <div class="text-right">
+              <p class="text-xs text-navy-500">落札店舗</p>
+              <p class="text-sm font-medium text-navy-800">田中買取店</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-sm text-green-600 mb-4">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            2024/01/10 成約
+          </div>
+          <a href="transactions.html" class="block w-full text-center bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition-colors font-medium">
+            取引詳細へ
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-gray-100 mt-12">
+    <div class="max-w-7xl mx-auto px-6 py-8">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+            <span class="font-display text-navy-900 text-sm font-bold">K</span>
+          </div>
+          <span class="font-display text-lg text-navy-800">KAIMAX</span>
+        </div>
+        <p class="text-sm text-navy-500">&copy; 2024 KAIMAX. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

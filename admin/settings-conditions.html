@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>商品状態管理 | KAIMAX Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: { 900: '#0A0F1C', 800: '#0F172A', 700: '#1E293B', 600: '#334155' },
+            gold: { 400: '#E5C158', 500: '#C9A227', 600: '#A88A1F' },
+            cream: { 50: '#FEFDFB', 100: '#FBF9F3', 200: '#F5F0E5' }
+          },
+          fontFamily: { 'display': ['Cormorant Garamond', 'serif'], 'sans': ['Noto Sans JP', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-gray-100 text-navy-800 antialiased">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-navy-900 flex-shrink-0">
+      <div class="p-6">
+        <a href="../public/top.html" class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+            <span class="font-display text-navy-900 text-xl font-bold">K</span>
+          </div>
+          <div>
+            <span class="font-display text-xl text-white tracking-wide block">KAIMAX</span>
+            <span class="text-xs text-gold-400">Admin</span>
+          </div>
+        </a>
+      </div>
+      <nav class="px-4 py-6 space-y-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          <span>ダッシュボード</span>
+        </a>
+        <div class="pt-4">
+          <div class="text-xs text-gray-500 px-4 mb-2 uppercase tracking-wider">設定・レポート</div>
+          <a href="settings.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/10 text-gold-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span class="font-medium">設定</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+      <header class="bg-white border-b border-gray-200 px-8 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <a href="settings.html" class="text-navy-500 hover:text-navy-700">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </a>
+            <h1 class="text-xl font-bold text-navy-800">商品状態管理</h1>
+          </div>
+          <div class="flex items-center gap-4">
+            <button class="px-4 py-2 bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 rounded-xl font-semibold text-sm">+ 新規ランク</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="flex-1 p-8 overflow-auto">
+        <!-- Settings Navigation -->
+        <div class="bg-white rounded-2xl shadow-sm mb-6">
+          <div class="flex border-b border-gray-100">
+            <a href="settings-fees.html" class="px-6 py-4 text-sm font-medium text-navy-500 hover:text-navy-700">手数料設定</a>
+            <a href="settings-categories.html" class="px-6 py-4 text-sm font-medium text-navy-500 hover:text-navy-700">カテゴリ管理</a>
+            <a href="settings-conditions.html" class="px-6 py-4 text-sm font-medium text-gold-600 border-b-2 border-gold-500">商品状態管理</a>
+            <a href="settings-seo.html" class="px-6 py-4 text-sm font-medium text-navy-500 hover:text-navy-700">SEO設定</a>
+          </div>
+        </div>
+
+        <!-- Condition Ranks -->
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+          <div class="p-6 border-b border-gray-100">
+            <h3 class="font-bold text-navy-800">商品状態ランク</h3>
+            <p class="text-sm text-navy-500 mt-1">出品時に選択できる商品状態のランクを管理します</p>
+          </div>
+          <div class="p-6 space-y-4">
+            <!-- Rank S -->
+            <div class="border border-gray-200 rounded-xl p-6 hover:border-gold-300 transition-colors">
+              <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-gradient-to-br from-gold-400 to-gold-600 rounded-xl flex items-center justify-center">
+                    <span class="text-navy-900 font-bold text-lg">S</span>
+                  </div>
+                  <div>
+                    <div class="font-bold text-navy-800">Sランク（新品同様）</div>
+                    <div class="text-sm text-navy-500">使用感がほとんどない、新品に近い状態</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">有効</span>
+                  <button class="text-gold-600 hover:text-gold-700 text-sm font-medium">編集</button>
+                </div>
+              </div>
+              <div class="bg-cream-50 rounded-lg p-4">
+                <div class="text-xs text-navy-500 mb-2">説明文（出品者向け）</div>
+                <div class="text-sm text-navy-700">未使用品、または使用回数が1〜2回程度の極めて状態の良い商品。タグ付きの新品、展示品も含みます。傷や汚れ、使用感がほとんど見られない状態です。</div>
+              </div>
+            </div>
+
+            <!-- Rank A -->
+            <div class="border border-gray-200 rounded-xl p-6 hover:border-gold-300 transition-colors">
+              <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
+                    <span class="text-white font-bold text-lg">A</span>
+                  </div>
+                  <div>
+                    <div class="font-bold text-navy-800">Aランク（美品）</div>
+                    <div class="text-sm text-navy-500">使用感が少なく、目立つ傷や汚れがない状態</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">有効</span>
+                  <button class="text-gold-600 hover:text-gold-700 text-sm font-medium">編集</button>
+                </div>
+              </div>
+              <div class="bg-cream-50 rounded-lg p-4">
+                <div class="text-xs text-navy-500 mb-2">説明文（出品者向け）</div>
+                <div class="text-sm text-navy-700">数回使用した程度の美品。全体的にきれいな状態で、目立つ傷や汚れはありません。軽微な使用感はあっても、通常の使用には影響のない状態です。</div>
+              </div>
+            </div>
+
+            <!-- Rank B -->
+            <div class="border border-gray-200 rounded-xl p-6 hover:border-gold-300 transition-colors">
+              <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
+                    <span class="text-white font-bold text-lg">B</span>
+                  </div>
+                  <div>
+                    <div class="font-bold text-navy-800">Bランク（良好）</div>
+                    <div class="text-sm text-navy-500">通常使用による使用感があるが、状態は良好</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">有効</span>
+                  <button class="text-gold-600 hover:text-gold-700 text-sm font-medium">編集</button>
+                </div>
+              </div>
+              <div class="bg-cream-50 rounded-lg p-4">
+                <div class="text-xs text-navy-500 mb-2">説明文（出品者向け）</div>
+                <div class="text-sm text-navy-700">一般的な使用感がある商品。小さな傷や汚れ、色あせなどがある場合がありますが、機能や使用には問題ありません。中古品としては標準的な状態です。</div>
+              </div>
+            </div>
+
+            <!-- Rank C -->
+            <div class="border border-gray-200 rounded-xl p-6 hover:border-gold-300 transition-colors">
+              <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-yellow-500 rounded-xl flex items-center justify-center">
+                    <span class="text-white font-bold text-lg">C</span>
+                  </div>
+                  <div>
+                    <div class="font-bold text-navy-800">Cランク（使用感あり）</div>
+                    <div class="text-sm text-navy-500">使用感が目立つが、使用には問題なし</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">有効</span>
+                  <button class="text-gold-600 hover:text-gold-700 text-sm font-medium">編集</button>
+                </div>
+              </div>
+              <div class="bg-cream-50 rounded-lg p-4">
+                <div class="text-xs text-navy-500 mb-2">説明文（出品者向け）</div>
+                <div class="text-sm text-navy-700">明らかな使用感があり、傷や汚れ、スレなどが目立つ商品。機能面では問題なく使用できますが、外観の劣化がある状態です。</div>
+              </div>
+            </div>
+
+            <!-- Rank D -->
+            <div class="border border-gray-200 rounded-xl p-6 hover:border-gold-300 transition-colors">
+              <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center">
+                    <span class="text-white font-bold text-lg">D</span>
+                  </div>
+                  <div>
+                    <div class="font-bold text-navy-800">Dランク（難あり）</div>
+                    <div class="text-sm text-navy-500">大きな傷や汚れ、不具合がある状態</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">有効</span>
+                  <button class="text-gold-600 hover:text-gold-700 text-sm font-medium">編集</button>
+                </div>
+              </div>
+              <div class="bg-cream-50 rounded-lg p-4">
+                <div class="text-xs text-navy-500 mb-2">説明文（出品者向け）</div>
+                <div class="text-sm text-navy-700">大きな傷、汚れ、破損、機能不良などがある商品。ジャンク品、部品取り用、修理前提での購入が想定されます。必ず詳細な状態説明が必要です。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-end gap-4 mt-6">
+          <button class="px-6 py-3 border border-gray-200 text-navy-600 rounded-xl font-medium hover:bg-gray-50">並び順を変更</button>
+          <button class="px-6 py-3 bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 rounded-xl font-semibold">変更を保存</button>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
