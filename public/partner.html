@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>質屋・買取店の方へ | 買取案件が届くプラットフォーム | KAIMAX</title>
   <meta name="description" content="オンラインで買取案件を獲得。初期費用無料、成約時のみ手数料。全国の売りたい人と質屋をマッチング。">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -40,6 +40,13 @@
     }
   </script>
   <style>
+    /* Safe area insets for iPhone notch */
+    :root {
+      --sat: env(safe-area-inset-top);
+      --sar: env(safe-area-inset-right);
+      --sab: env(safe-area-inset-bottom);
+      --sal: env(safe-area-inset-left);
+    }
     .gradient-text {
       background: linear-gradient(135deg, #E5C158 0%, #C9A227 50%, #A88A1F 100%);
       -webkit-background-clip: text;
@@ -52,18 +59,47 @@
     .noise-overlay {
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
     }
+    /* Mobile menu styles */
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+    }
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
+    .mobile-menu-overlay {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    /* Touch target minimum size */
+    .touch-target {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    /* Safe area padding */
+    .safe-top {
+      padding-top: max(1rem, var(--sat));
+    }
+    .safe-bottom {
+      padding-bottom: max(1rem, var(--sab));
+    }
   </style>
 </head>
 <body class="font-sans bg-cream-50 text-navy-800 antialiased">
   <!-- Navigation -->
   <header class="fixed top-0 left-0 right-0 z-50 bg-navy-900/95 backdrop-blur-md border-b border-gold-500/20">
-    <nav class="max-w-7xl mx-auto px-6 py-4">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
       <div class="flex items-center justify-between">
-        <a href="top.html" class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
-            <span class="font-display text-navy-900 text-xl font-bold">K</span>
+        <a href="top.html" class="flex items-center gap-2 sm:gap-3">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+            <span class="font-display text-navy-900 text-lg sm:text-xl font-bold">K</span>
           </div>
-          <span class="font-display text-2xl text-white tracking-wide">KAIMAX</span>
+          <span class="font-display text-xl sm:text-2xl text-white tracking-wide">KAIMAX</span>
         </a>
 
         <div class="hidden md:flex items-center gap-8">
@@ -73,30 +109,67 @@
           <a href="#faq" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">よくある質問</a>
         </div>
 
-        <div class="flex items-center gap-4">
-          <a href="../auth/login.html" class="text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">ログイン</a>
-          <a href="partner-register.html" class="bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 px-6 py-2.5 rounded-full text-sm font-semibold hover:shadow-lg hover:shadow-gold-500/30 transition-all">
+        <div class="flex items-center gap-2 sm:gap-4">
+          <a href="../auth/login.html" class="hidden sm:block text-cream-100 hover:text-gold-400 transition-colors text-sm tracking-wide">ログイン</a>
+          <a href="partner-register.html" class="hidden sm:block bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm font-semibold hover:shadow-lg hover:shadow-gold-500/30 transition-all">
             加盟申請
           </a>
+          <!-- Mobile menu button -->
+          <button id="mobile-menu-btn" class="md:hidden flex items-center justify-center w-11 h-11 touch-target text-cream-100 hover:text-gold-400 transition-colors" aria-label="メニューを開く">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
         </div>
       </div>
     </nav>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero-gradient pt-32 pb-20 relative overflow-hidden">
-    <div class="noise-overlay absolute inset-0 pointer-events-none"></div>
-    <div class="absolute top-20 right-10 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl"></div>
+  <!-- Mobile Menu Overlay -->
+  <div id="mobile-menu-overlay" class="mobile-menu-overlay fixed inset-0 bg-black/50 z-50 md:hidden"></div>
 
-    <div class="max-w-7xl mx-auto px-6 relative">
-      <div class="grid lg:grid-cols-2 gap-16 items-center">
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-navy-900 z-50 md:hidden overflow-y-auto">
+    <div class="p-4 safe-top">
+      <div class="flex items-center justify-between mb-8">
+        <span class="font-display text-xl text-white">メニュー</span>
+        <button id="mobile-menu-close" class="flex items-center justify-center w-11 h-11 touch-target text-cream-100 hover:text-gold-400 transition-colors" aria-label="メニューを閉じる">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="space-y-2">
+        <a href="sell.html" class="flex items-center h-12 px-4 text-cream-100 hover:text-gold-400 hover:bg-white/5 rounded-lg transition-colors">売りたい方へ</a>
+        <a href="partner.html" class="flex items-center h-12 px-4 text-gold-400 bg-white/5 rounded-lg">質屋の方へ</a>
+        <a href="#pricing" class="flex items-center h-12 px-4 text-cream-100 hover:text-gold-400 hover:bg-white/5 rounded-lg transition-colors">料金体系</a>
+        <a href="#faq" class="flex items-center h-12 px-4 text-cream-100 hover:text-gold-400 hover:bg-white/5 rounded-lg transition-colors">よくある質問</a>
+      </div>
+      <div class="border-t border-white/10 mt-6 pt-6 space-y-3">
+        <a href="../auth/login.html" class="flex items-center justify-center h-12 border border-cream-200/30 text-cream-100 rounded-full hover:bg-white/5 transition-colors">
+          ログイン
+        </a>
+        <a href="partner-register.html" class="flex items-center justify-center h-12 bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 rounded-full font-semibold">
+          加盟申請
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero-gradient pt-24 sm:pt-32 pb-16 sm:pb-20 relative overflow-hidden">
+    <div class="noise-overlay absolute inset-0 pointer-events-none"></div>
+    <div class="absolute top-20 right-10 w-64 sm:w-96 h-64 sm:h-96 bg-gold-500/5 rounded-full blur-3xl"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative">
+      <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
         <div>
           <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm border border-gold-500/30 rounded-full px-4 py-2 mb-6">
             <span class="w-2 h-2 bg-gold-400 rounded-full animate-pulse"></span>
             <span class="text-cream-200 text-sm">質屋・買取店の方へ</span>
           </div>
 
-          <h1 class="font-display text-4xl lg:text-6xl text-white leading-tight mb-6">
+          <h1 class="font-display text-3xl sm:text-4xl lg:text-6xl text-white leading-tight mb-6">
             買取案件が<br>
             <span class="gradient-text">届く仕組み</span>
           </h1>
@@ -118,20 +191,20 @@
             </a>
           </div>
 
-          <div class="flex items-center gap-8">
+          <div class="flex items-center justify-center sm:justify-start gap-4 sm:gap-8">
             <div class="text-center">
-              <div class="font-display text-3xl text-gold-400">500+</div>
-              <div class="text-cream-300 text-sm">加盟店舗</div>
+              <div class="font-display text-2xl sm:text-3xl text-gold-400">500+</div>
+              <div class="text-cream-300 text-xs sm:text-sm">加盟店舗</div>
             </div>
-            <div class="w-px h-12 bg-cream-200/20"></div>
+            <div class="w-px h-10 sm:h-12 bg-cream-200/20"></div>
             <div class="text-center">
-              <div class="font-display text-3xl text-gold-400">1,000+</div>
-              <div class="text-cream-300 text-sm">月間出品数</div>
+              <div class="font-display text-2xl sm:text-3xl text-gold-400">1,000+</div>
+              <div class="text-cream-300 text-xs sm:text-sm">月間出品数</div>
             </div>
-            <div class="w-px h-12 bg-cream-200/20"></div>
+            <div class="w-px h-10 sm:h-12 bg-cream-200/20"></div>
             <div class="text-center">
-              <div class="font-display text-3xl text-gold-400">0円</div>
-              <div class="text-cream-300 text-sm">初期費用</div>
+              <div class="font-display text-2xl sm:text-3xl text-gold-400">0円</div>
+              <div class="text-cream-300 text-xs sm:text-sm">初期費用</div>
             </div>
           </div>
         </div>
@@ -182,14 +255,14 @@
   </section>
 
   <!-- Benefits Section -->
-  <section class="py-20 bg-cream-50">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16">
+  <section class="py-16 sm:py-20 bg-cream-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10 sm:mb-16">
         <span class="text-gold-500 text-sm font-medium tracking-wider uppercase">Benefits</span>
-        <h2 class="font-display text-4xl text-navy-800 mt-4">加盟のメリット</h2>
+        <h2 class="font-display text-3xl sm:text-4xl text-navy-800 mt-4">加盟のメリット</h2>
       </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
         <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all">
           <div class="w-14 h-14 bg-gold-400/20 rounded-xl flex items-center justify-center mb-4">
             <svg class="w-7 h-7 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -242,30 +315,30 @@
   </section>
 
   <!-- Pricing Section -->
-  <section id="pricing" class="py-20 bg-white">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="text-center mb-16">
+  <section id="pricing" class="py-16 sm:py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10 sm:mb-16">
         <span class="text-gold-500 text-sm font-medium tracking-wider uppercase">Pricing</span>
-        <h2 class="font-display text-4xl text-navy-800 mt-4">料金体系</h2>
-        <p class="text-navy-600 mt-4">シンプルで分かりやすい料金体系</p>
+        <h2 class="font-display text-3xl sm:text-4xl text-navy-800 mt-4">料金体系</h2>
+        <p class="text-navy-600 mt-4 text-sm sm:text-base">シンプルで分かりやすい料金体系</p>
       </div>
 
-      <div class="bg-gradient-to-br from-navy-800 to-navy-900 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
+      <div class="bg-gradient-to-br from-navy-800 to-navy-900 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 text-white relative overflow-hidden">
         <div class="absolute top-0 right-0 w-64 h-64 bg-gold-500/10 rounded-full blur-3xl"></div>
 
         <div class="relative">
-          <div class="grid md:grid-cols-3 gap-8 mb-12">
-            <div class="text-center p-6 bg-white/5 rounded-2xl">
-              <div class="text-cream-300 text-sm mb-2">初期費用</div>
-              <div class="font-display text-5xl text-gold-400">0<span class="text-2xl">円</span></div>
+          <div class="grid grid-cols-3 gap-3 sm:gap-8 mb-8 sm:mb-12">
+            <div class="text-center p-4 sm:p-6 bg-white/5 rounded-xl sm:rounded-2xl">
+              <div class="text-cream-300 text-xs sm:text-sm mb-1 sm:mb-2">初期費用</div>
+              <div class="font-display text-3xl sm:text-5xl text-gold-400">0<span class="text-lg sm:text-2xl">円</span></div>
             </div>
-            <div class="text-center p-6 bg-white/5 rounded-2xl">
-              <div class="text-cream-300 text-sm mb-2">月額費用</div>
-              <div class="font-display text-5xl text-gold-400">0<span class="text-2xl">円</span></div>
+            <div class="text-center p-4 sm:p-6 bg-white/5 rounded-xl sm:rounded-2xl">
+              <div class="text-cream-300 text-xs sm:text-sm mb-1 sm:mb-2">月額費用</div>
+              <div class="font-display text-3xl sm:text-5xl text-gold-400">0<span class="text-lg sm:text-2xl">円</span></div>
             </div>
-            <div class="text-center p-6 bg-white/5 rounded-2xl">
-              <div class="text-cream-300 text-sm mb-2">入札費用</div>
-              <div class="font-display text-5xl text-gold-400">0<span class="text-2xl">円</span></div>
+            <div class="text-center p-4 sm:p-6 bg-white/5 rounded-xl sm:rounded-2xl">
+              <div class="text-cream-300 text-xs sm:text-sm mb-1 sm:mb-2">入札費用</div>
+              <div class="font-display text-3xl sm:text-5xl text-gold-400">0<span class="text-lg sm:text-2xl">円</span></div>
             </div>
           </div>
 
@@ -301,14 +374,14 @@
   </section>
 
   <!-- How it works Section -->
-  <section id="how-it-works" class="py-20 bg-cream-100">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16">
+  <section id="how-it-works" class="py-16 sm:py-20 bg-cream-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10 sm:mb-16">
         <span class="text-gold-500 text-sm font-medium tracking-wider uppercase">Flow</span>
-        <h2 class="font-display text-4xl text-navy-800 mt-4">ご利用の流れ</h2>
+        <h2 class="font-display text-3xl sm:text-4xl text-navy-800 mt-4">ご利用の流れ</h2>
       </div>
 
-      <div class="grid md:grid-cols-4 gap-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
         <div class="relative">
           <div class="bg-white rounded-2xl p-6 shadow-sm h-full">
             <div class="w-12 h-12 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center mb-4">
@@ -364,11 +437,11 @@
   </section>
 
   <!-- Requirements Section -->
-  <section class="py-20 bg-white">
-    <div class="max-w-4xl mx-auto px-6">
-      <div class="text-center mb-12">
+  <section class="py-16 sm:py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10 sm:mb-12">
         <span class="text-gold-500 text-sm font-medium tracking-wider uppercase">Requirements</span>
-        <h2 class="font-display text-4xl text-navy-800 mt-4">加盟要件</h2>
+        <h2 class="font-display text-3xl sm:text-4xl text-navy-800 mt-4">加盟要件</h2>
       </div>
 
       <div class="bg-cream-50 rounded-3xl p-8">
@@ -414,11 +487,11 @@
   </section>
 
   <!-- FAQ Section -->
-  <section id="faq" class="py-20 bg-cream-100">
-    <div class="max-w-3xl mx-auto px-6">
-      <div class="text-center mb-12">
+  <section id="faq" class="py-16 sm:py-20 bg-cream-100">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10 sm:mb-12">
         <span class="text-gold-500 text-sm font-medium tracking-wider uppercase">FAQ</span>
-        <h2 class="font-display text-4xl text-navy-800 mt-4">よくある質問</h2>
+        <h2 class="font-display text-3xl sm:text-4xl text-navy-800 mt-4">よくある質問</h2>
       </div>
 
       <div class="space-y-4">
@@ -474,13 +547,13 @@
   </section>
 
   <!-- CTA Section -->
-  <section class="py-20 hero-gradient relative overflow-hidden">
+  <section class="py-16 sm:py-20 hero-gradient relative overflow-hidden">
     <div class="noise-overlay absolute inset-0 pointer-events-none"></div>
-    <div class="max-w-4xl mx-auto px-6 text-center relative">
-      <h2 class="font-display text-4xl text-white mb-6">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center relative">
+      <h2 class="font-display text-3xl sm:text-4xl text-white mb-6">
         今すぐ加盟して<br>買取案件を獲得しましょう
       </h2>
-      <p class="text-cream-200 text-lg mb-10 max-w-2xl mx-auto">
+      <p class="text-cream-200 text-base sm:text-lg mb-8 sm:mb-10 max-w-2xl mx-auto">
         初期費用・月額費用なし。成約時のみ手数料が発生する完全成果報酬型です。
       </p>
       <a href="partner-register.html" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 px-10 py-4 rounded-full text-lg font-semibold hover:shadow-xl hover:shadow-gold-500/30 transition-all">
@@ -493,9 +566,9 @@
   </section>
 
   <!-- Footer -->
-  <footer class="bg-navy-900 text-cream-200 py-16">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+  <footer class="bg-navy-900 text-cream-200 py-12 sm:py-16 safe-bottom">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mb-8 sm:mb-12">
         <div>
           <div class="flex items-center gap-3 mb-6">
             <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
@@ -539,5 +612,39 @@
       </div>
     </div>
   </footer>
+
+  <!-- Mobile Menu JavaScript -->
+  <script>
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+
+    function openMobileMenu() {
+      mobileMenu.classList.add('active');
+      mobileMenuOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('active');
+      mobileMenuOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    mobileMenuBtn.addEventListener('click', openMobileMenu);
+    mobileMenuClose.addEventListener('click', closeMobileMenu);
+    mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+
+    // Close menu on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+
+    // Close menu on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMobileMenu();
+    });
+  </script>
 </body>
 </html>

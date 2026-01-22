@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ログイン | KAIMAX</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,11 +39,28 @@
     }
   </script>
   <style>
+    /* Safe area insets for iPhone notch */
+    :root {
+      --sat: env(safe-area-inset-top);
+      --sar: env(safe-area-inset-right);
+      --sab: env(safe-area-inset-bottom);
+      --sal: env(safe-area-inset-left);
+    }
     .hero-gradient {
       background: linear-gradient(135deg, #0A0F1C 0%, #0F172A 50%, #1E293B 100%);
     }
     .noise-overlay {
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    }
+    .safe-top {
+      padding-top: max(1rem, var(--sat));
+    }
+    .safe-bottom {
+      padding-bottom: max(1rem, var(--sab));
+    }
+    /* Touch target minimum size */
+    input, button, a.block {
+      min-height: 44px;
     }
   </style>
 </head>
@@ -103,7 +120,7 @@
     <!-- Right Side - Login Form -->
     <div class="w-full lg:w-1/2 flex flex-col">
       <!-- Mobile Header -->
-      <div class="lg:hidden p-6 flex items-center justify-between border-b border-gray-100">
+      <div class="lg:hidden p-4 sm:p-6 safe-top flex items-center justify-between border-b border-gray-100">
         <a href="../public/top.html" class="flex items-center gap-2">
           <div class="w-8 h-8 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
             <span class="font-display text-navy-900 text-lg font-bold">K</span>
@@ -112,10 +129,10 @@
         </a>
       </div>
 
-      <div class="flex-1 flex items-center justify-center p-6 lg:p-16">
+      <div class="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-16">
         <div class="w-full max-w-md">
-          <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold text-navy-800 mb-2">ログイン</h2>
+          <div class="text-center mb-6 sm:mb-8">
+            <h2 class="text-2xl sm:text-3xl font-bold text-navy-800 mb-2">ログイン</h2>
             <p class="text-navy-600">アカウントにログインしてください</p>
           </div>
 
@@ -189,7 +206,7 @@
       </div>
 
       <!-- Footer -->
-      <div class="p-6 border-t border-gray-100 text-center text-sm text-navy-500">
+      <div class="p-4 sm:p-6 safe-bottom border-t border-gray-100 text-center text-sm text-navy-500">
         <a href="#" class="hover:text-navy-700">利用規約</a>
         <span class="mx-2">・</span>
         <a href="#" class="hover:text-navy-700">プライバシーポリシー</a>

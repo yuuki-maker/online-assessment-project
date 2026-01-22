@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>登録内容の確認 | KAIMAX</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,11 +38,20 @@
       }
     }
   </script>
+  <style>
+    :root {
+      --sat: env(safe-area-inset-top);
+      --sab: env(safe-area-inset-bottom);
+    }
+    .safe-top { padding-top: max(1rem, var(--sat)); }
+    .safe-bottom { padding-bottom: max(1rem, var(--sab)); }
+    input, button { min-height: 44px; }
+  </style>
 </head>
 <body class="font-sans bg-cream-50 text-navy-800 antialiased">
   <div class="min-h-screen">
     <!-- Header -->
-    <header class="p-6 flex items-center justify-between border-b border-gray-100 bg-white">
+    <header class="p-4 sm:p-6 safe-top flex items-center justify-between border-b border-gray-100 bg-white">
       <a href="../public/top.html" class="flex items-center gap-2">
         <div class="w-8 h-8 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
           <span class="font-display text-navy-900 text-lg font-bold">K</span>
@@ -52,7 +61,7 @@
       <a href="login.html" class="text-gold-600 hover:text-gold-700 font-medium text-sm">既にアカウントをお持ちの方</a>
     </header>
 
-    <div class="max-w-2xl mx-auto px-6 py-12">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <!-- Progress Steps -->
       <div class="mb-12">
         <div class="flex items-center justify-between relative">
@@ -299,7 +308,7 @@
     </div>
 
     <!-- Footer -->
-    <div class="p-6 border-t border-gray-100 text-center text-sm text-navy-500 bg-white">
+    <div class="p-4 sm:p-6 safe-bottom border-t border-gray-100 text-center text-sm text-navy-500 bg-white">
       <a href="#" class="hover:text-navy-700">利用規約</a>
       <span class="mx-2">・</span>
       <a href="#" class="hover:text-navy-700">プライバシーポリシー</a>

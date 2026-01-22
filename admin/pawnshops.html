@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>質屋一覧 | KAIMAX Admin</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,12 +22,44 @@
       }
     }
   </script>
+  <style>
+    :root {
+      --sat: env(safe-area-inset-top);
+      --sab: env(safe-area-inset-bottom);
+    }
+    .safe-top { padding-top: max(0px, var(--sat)); }
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+    }
+    .sidebar.active {
+      transform: translateX(0);
+    }
+    .sidebar-overlay {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .sidebar-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .touch-target { min-height: 44px; min-width: 44px; }
+    @media (min-width: 1024px) {
+      .sidebar {
+        transform: translateX(0);
+      }
+    }
+  </style>
 </head>
 <body class="font-sans bg-gray-100 text-navy-800 antialiased">
+  <!-- Sidebar Overlay -->
+  <div id="sidebar-overlay" class="sidebar-overlay fixed inset-0 bg-black/50 z-40 lg:hidden"></div>
+
   <div class="flex min-h-screen">
     <!-- Sidebar -->
-    <aside class="w-64 bg-navy-900 flex-shrink-0">
-      <div class="p-6">
+    <aside id="sidebar" class="sidebar fixed lg:static inset-y-0 left-0 w-64 bg-navy-900 flex-shrink-0 z-50 overflow-y-auto safe-top">
+      <div class="p-4 lg:p-6 flex items-center justify-between">
         <a href="../public/top.html" class="flex items-center gap-3">
           <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
             <span class="font-display text-navy-900 text-xl font-bold">K</span>
@@ -37,6 +69,11 @@
             <span class="text-xs text-gold-400">Admin</span>
           </div>
         </a>
+        <button id="sidebar-close" class="lg:hidden w-10 h-10 flex items-center justify-center text-cream-100 hover:text-gold-400 transition-colors touch-target" aria-label="メニューを閉じる">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
       </div>
       <nav class="px-4 py-6 space-y-1">
         <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
@@ -100,9 +137,16 @@
 
     <!-- Main Content -->
     <div class="flex-1 flex flex-col">
-      <header class="bg-white border-b border-gray-200 px-8 py-4">
+      <header class="bg-white border-b border-gray-200 px-4 lg:px-8 py-4 safe-top">
         <div class="flex items-center justify-between">
-          <h1 class="text-xl font-bold text-navy-800">質屋一覧</h1>
+          <div class="flex items-center gap-4">
+            <button id="sidebar-toggle" class="lg:hidden w-10 h-10 flex items-center justify-center text-navy-600 hover:text-gold-600 transition-colors touch-target" aria-label="メニューを開く">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+            </button>
+            <h1 class="text-lg lg:text-xl font-bold text-navy-800">質屋一覧</h1>
+          </div>
           <div class="flex items-center gap-4">
             <div class="w-10 h-10 rounded-full bg-navy-800 flex items-center justify-center">
               <span class="text-gold-400 font-semibold">管</span>
@@ -111,10 +155,10 @@
         </div>
       </header>
 
-      <main class="flex-1 p-8 overflow-auto">
+      <main class="flex-1 p-4 lg:p-8 overflow-auto">
         <!-- Filters -->
         <div class="bg-white rounded-2xl p-6 shadow-sm mb-6">
-          <div class="grid grid-cols-5 gap-4">
+          <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
             <div class="col-span-2">
               <input type="text" placeholder="店舗名・代表者名で検索..." class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none text-sm">
             </div>
@@ -141,42 +185,42 @@
         </div>
 
         <!-- Stats -->
-        <div class="grid grid-cols-4 gap-4 mb-6">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <div class="bg-white rounded-xl p-4 shadow-sm">
-            <div class="text-2xl font-bold text-navy-800">156</div>
+            <div class="text-lg sm:text-2xl font-bold text-navy-800">156</div>
             <div class="text-sm text-navy-500">登録質屋数</div>
           </div>
           <div class="bg-white rounded-xl p-4 shadow-sm">
-            <div class="text-2xl font-bold text-green-600">142</div>
+            <div class="text-lg sm:text-2xl font-bold text-green-600">142</div>
             <div class="text-sm text-navy-500">アクティブ</div>
           </div>
           <div class="bg-white rounded-xl p-4 shadow-sm">
-            <div class="text-2xl font-bold text-yellow-600">5</div>
+            <div class="text-lg sm:text-2xl font-bold text-yellow-600">5</div>
             <div class="text-sm text-navy-500">審査待ち</div>
           </div>
           <div class="bg-white rounded-xl p-4 shadow-sm">
-            <div class="text-2xl font-bold text-gold-600">¥48.2M</div>
+            <div class="text-lg sm:text-2xl font-bold text-gold-600">¥48.2M</div>
             <div class="text-sm text-navy-500">今月の総取引額</div>
           </div>
         </div>
 
         <!-- Table -->
-        <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden overflow-x-auto">
           <table class="w-full">
             <thead class="bg-gray-50">
               <tr>
-                <th class="text-left text-xs text-navy-500 font-medium px-6 py-4">店舗情報</th>
-                <th class="text-left text-xs text-navy-500 font-medium px-6 py-4">所在地</th>
-                <th class="text-left text-xs text-navy-500 font-medium px-6 py-4">登録日</th>
-                <th class="text-left text-xs text-navy-500 font-medium px-6 py-4">取引数</th>
-                <th class="text-left text-xs text-navy-500 font-medium px-6 py-4">評価</th>
-                <th class="text-left text-xs text-navy-500 font-medium px-6 py-4">ステータス</th>
-                <th class="text-left text-xs text-navy-500 font-medium px-6 py-4">操作</th>
+                <th class="text-left text-xs text-navy-500 font-medium px-3 sm:px-6 py-4">店舗情報</th>
+                <th class="text-left text-xs text-navy-500 font-medium px-3 sm:px-6 py-4">所在地</th>
+                <th class="text-left text-xs text-navy-500 font-medium px-3 sm:px-6 py-4">登録日</th>
+                <th class="text-left text-xs text-navy-500 font-medium px-3 sm:px-6 py-4">取引数</th>
+                <th class="text-left text-xs text-navy-500 font-medium px-3 sm:px-6 py-4">評価</th>
+                <th class="text-left text-xs text-navy-500 font-medium px-3 sm:px-6 py-4">ステータス</th>
+                <th class="text-left text-xs text-navy-500 font-medium px-3 sm:px-6 py-4">操作</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
               <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4">
+                <td class="px-3 sm:px-6 py-4">
                   <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-full bg-gold-100 flex items-center justify-center"><span class="text-gold-600 font-semibold">鈴</span></div>
                     <div>
@@ -185,20 +229,20 @@
                     </div>
                   </div>
                 </td>
-                <td class="px-6 py-4 text-sm text-navy-600">東京都渋谷区</td>
-                <td class="px-6 py-4 text-sm text-navy-600">2023/06/15</td>
-                <td class="px-6 py-4 text-sm text-navy-800 font-medium">256件</td>
-                <td class="px-6 py-4">
+                <td class="px-3 sm:px-6 py-4 text-sm text-navy-600">東京都渋谷区</td>
+                <td class="px-3 sm:px-6 py-4 text-sm text-navy-600">2023/06/15</td>
+                <td class="px-3 sm:px-6 py-4 text-sm text-navy-800 font-medium">256件</td>
+                <td class="px-3 sm:px-6 py-4">
                   <div class="flex items-center gap-1">
                     <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
                     <span class="text-sm font-medium text-navy-800">4.8</span>
                   </div>
                 </td>
-                <td class="px-6 py-4"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">アクティブ</span></td>
-                <td class="px-6 py-4"><a href="pawnshop-detail.html" class="text-gold-600 hover:text-gold-700 text-sm font-medium">詳細</a></td>
+                <td class="px-3 sm:px-6 py-4"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">アクティブ</span></td>
+                <td class="px-3 sm:px-6 py-4"><a href="pawnshop-detail.html" class="text-gold-600 hover:text-gold-700 text-sm font-medium">詳細</a></td>
               </tr>
               <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4">
+                <td class="px-3 sm:px-6 py-4">
                   <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center"><span class="text-blue-600 font-semibold">大</span></div>
                     <div>
@@ -207,20 +251,20 @@
                     </div>
                   </div>
                 </td>
-                <td class="px-6 py-4 text-sm text-navy-600">東京都新宿区</td>
-                <td class="px-6 py-4 text-sm text-navy-600">2023/04/20</td>
-                <td class="px-6 py-4 text-sm text-navy-800 font-medium">512件</td>
-                <td class="px-6 py-4">
+                <td class="px-3 sm:px-6 py-4 text-sm text-navy-600">東京都新宿区</td>
+                <td class="px-3 sm:px-6 py-4 text-sm text-navy-600">2023/04/20</td>
+                <td class="px-3 sm:px-6 py-4 text-sm text-navy-800 font-medium">512件</td>
+                <td class="px-3 sm:px-6 py-4">
                   <div class="flex items-center gap-1">
                     <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
                     <span class="text-sm font-medium text-navy-800">4.9</span>
                   </div>
                 </td>
-                <td class="px-6 py-4"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">アクティブ</span></td>
-                <td class="px-6 py-4"><a href="pawnshop-detail.html" class="text-gold-600 hover:text-gold-700 text-sm font-medium">詳細</a></td>
+                <td class="px-3 sm:px-6 py-4"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">アクティブ</span></td>
+                <td class="px-3 sm:px-6 py-4"><a href="pawnshop-detail.html" class="text-gold-600 hover:text-gold-700 text-sm font-medium">詳細</a></td>
               </tr>
               <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4">
+                <td class="px-3 sm:px-6 py-4">
                   <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center"><span class="text-green-600 font-semibold">質</span></div>
                     <div>
@@ -229,20 +273,20 @@
                     </div>
                   </div>
                 </td>
-                <td class="px-6 py-4 text-sm text-navy-600">大阪府大阪市</td>
-                <td class="px-6 py-4 text-sm text-navy-600">2023/08/01</td>
-                <td class="px-6 py-4 text-sm text-navy-800 font-medium">89件</td>
-                <td class="px-6 py-4">
+                <td class="px-3 sm:px-6 py-4 text-sm text-navy-600">大阪府大阪市</td>
+                <td class="px-3 sm:px-6 py-4 text-sm text-navy-600">2023/08/01</td>
+                <td class="px-3 sm:px-6 py-4 text-sm text-navy-800 font-medium">89件</td>
+                <td class="px-3 sm:px-6 py-4">
                   <div class="flex items-center gap-1">
                     <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
                     <span class="text-sm font-medium text-navy-800">4.5</span>
                   </div>
                 </td>
-                <td class="px-6 py-4"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">アクティブ</span></td>
-                <td class="px-6 py-4"><a href="pawnshop-detail.html" class="text-gold-600 hover:text-gold-700 text-sm font-medium">詳細</a></td>
+                <td class="px-3 sm:px-6 py-4"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">アクティブ</span></td>
+                <td class="px-3 sm:px-6 py-4"><a href="pawnshop-detail.html" class="text-gold-600 hover:text-gold-700 text-sm font-medium">詳細</a></td>
               </tr>
               <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4">
+                <td class="px-3 sm:px-6 py-4">
                   <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center"><span class="text-yellow-600 font-semibold">松</span></div>
                     <div>
@@ -251,17 +295,17 @@
                     </div>
                   </div>
                 </td>
-                <td class="px-6 py-4 text-sm text-navy-600">神奈川県横浜市</td>
-                <td class="px-6 py-4 text-sm text-navy-600">2024/01/10</td>
-                <td class="px-6 py-4 text-sm text-navy-800 font-medium">0件</td>
-                <td class="px-6 py-4">
+                <td class="px-3 sm:px-6 py-4 text-sm text-navy-600">神奈川県横浜市</td>
+                <td class="px-3 sm:px-6 py-4 text-sm text-navy-600">2024/01/10</td>
+                <td class="px-3 sm:px-6 py-4 text-sm text-navy-800 font-medium">0件</td>
+                <td class="px-3 sm:px-6 py-4">
                   <span class="text-sm text-navy-400">-</span>
                 </td>
-                <td class="px-6 py-4"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">審査中</span></td>
-                <td class="px-6 py-4"><a href="pawnshop-detail.html" class="text-gold-600 hover:text-gold-700 text-sm font-medium">詳細</a></td>
+                <td class="px-3 sm:px-6 py-4"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">審査中</span></td>
+                <td class="px-3 sm:px-6 py-4"><a href="pawnshop-detail.html" class="text-gold-600 hover:text-gold-700 text-sm font-medium">詳細</a></td>
               </tr>
               <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4">
+                <td class="px-3 sm:px-6 py-4">
                   <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center"><span class="text-red-600 font-semibold">高</span></div>
                     <div>
@@ -270,17 +314,17 @@
                     </div>
                   </div>
                 </td>
-                <td class="px-6 py-4 text-sm text-navy-600">愛知県名古屋市</td>
-                <td class="px-6 py-4 text-sm text-navy-600">2023/02/28</td>
-                <td class="px-6 py-4 text-sm text-navy-800 font-medium">178件</td>
-                <td class="px-6 py-4">
+                <td class="px-3 sm:px-6 py-4 text-sm text-navy-600">愛知県名古屋市</td>
+                <td class="px-3 sm:px-6 py-4 text-sm text-navy-600">2023/02/28</td>
+                <td class="px-3 sm:px-6 py-4 text-sm text-navy-800 font-medium">178件</td>
+                <td class="px-3 sm:px-6 py-4">
                   <div class="flex items-center gap-1">
                     <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
                     <span class="text-sm font-medium text-navy-800">3.2</span>
                   </div>
                 </td>
-                <td class="px-6 py-4"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">一時停止</span></td>
-                <td class="px-6 py-4"><a href="pawnshop-detail.html" class="text-gold-600 hover:text-gold-700 text-sm font-medium">詳細</a></td>
+                <td class="px-3 sm:px-6 py-4"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">一時停止</span></td>
+                <td class="px-3 sm:px-6 py-4"><a href="pawnshop-detail.html" class="text-gold-600 hover:text-gold-700 text-sm font-medium">詳細</a></td>
               </tr>
             </tbody>
           </table>
@@ -299,5 +343,39 @@
       </main>
     </div>
   </div>
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const sidebarClose = document.getElementById('sidebar-close');
+
+    function openSidebar() {
+      sidebar.classList.add('active');
+      sidebarOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar() {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    sidebarToggle.addEventListener('click', openSidebar);
+    sidebarClose.addEventListener('click', closeSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+
+    sidebar.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 1024) {
+          closeSidebar();
+        }
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeSidebar();
+    });
+  </script>
 </body>
 </html>

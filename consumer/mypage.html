@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>マイページ | KAIMAX</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,17 +38,58 @@
       }
     }
   </script>
+  <style>
+    :root {
+      --sat: env(safe-area-inset-top);
+      --sab: env(safe-area-inset-bottom);
+    }
+    .safe-top { padding-top: max(1rem, var(--sat)); }
+    .safe-bottom { padding-bottom: max(1rem, var(--sab)); }
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+    }
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
+    .mobile-menu-overlay {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .touch-target { min-height: 44px; min-width: 44px; }
+    /* Bottom navigation padding */
+    .pb-bottom-nav { padding-bottom: calc(5rem + var(--sab, 0px)); }
+    @media (min-width: 768px) {
+      .pb-bottom-nav { padding-bottom: 2rem; }
+    }
+    /* iOS Safari fixed bottom nav */
+    .bottom-nav-fixed {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding-bottom: var(--sab, 0px);
+      /* Prevent shifting on iOS Safari scroll */
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+    }
+  </style>
 </head>
 <body class="font-sans bg-cream-50 text-navy-800 antialiased">
   <!-- Header -->
-  <header class="bg-navy-900 border-b border-gold-500/20">
-    <nav class="max-w-7xl mx-auto px-6 py-4">
+  <header class="bg-navy-900 border-b border-gold-500/20 safe-top">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
       <div class="flex items-center justify-between">
-        <a href="../public/top.html" class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
-            <span class="font-display text-navy-900 text-xl font-bold">K</span>
+        <a href="../public/top.html" class="flex items-center gap-2 sm:gap-3">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+            <span class="font-display text-navy-900 text-lg sm:text-xl font-bold">K</span>
           </div>
-          <span class="font-display text-2xl text-white tracking-wide">KAIMAX</span>
+          <span class="font-display text-xl sm:text-2xl text-white tracking-wide">KAIMAX</span>
         </a>
 
         <div class="hidden md:flex items-center gap-8">
@@ -62,94 +103,155 @@
           </a>
         </div>
 
-        <div class="flex items-center gap-4">
-          <button class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+        <div class="flex items-center gap-2 sm:gap-4">
+          <button class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors touch-target">
             <svg class="w-5 h-5 text-cream-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
             </svg>
           </button>
-          <div class="flex items-center gap-2">
+          <div class="hidden sm:flex items-center gap-2">
             <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center">
               <span class="text-navy-900 font-semibold">山</span>
             </div>
             <span class="text-cream-100 text-sm hidden md:block">山田太郎</span>
           </div>
+          <!-- Mobile menu button -->
+          <button id="mobile-menu-btn" class="md:hidden flex items-center justify-center w-10 h-10 touch-target text-cream-100 hover:text-gold-400 transition-colors" aria-label="メニューを開く">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
         </div>
       </div>
     </nav>
   </header>
 
-  <main class="max-w-7xl mx-auto px-6 py-8">
+  <!-- Mobile Menu Overlay -->
+  <div id="mobile-menu-overlay" class="mobile-menu-overlay fixed inset-0 bg-black/50 z-50 md:hidden"></div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-navy-900 z-50 md:hidden overflow-y-auto">
+    <div class="p-4 safe-top">
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center">
+            <span class="text-navy-900 font-semibold">山</span>
+          </div>
+          <span class="text-cream-100">山田太郎</span>
+        </div>
+        <button id="mobile-menu-close" class="flex items-center justify-center w-10 h-10 touch-target text-cream-100 hover:text-gold-400 transition-colors" aria-label="メニューを閉じる">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="space-y-1">
+        <a href="mypage.html" class="flex items-center h-12 px-4 text-gold-400 bg-white/5 rounded-lg">
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          マイページ
+        </a>
+        <a href="products-new.html" class="flex items-center h-12 px-4 text-cream-100 hover:text-gold-400 hover:bg-white/5 rounded-lg transition-colors">
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+          出品する
+        </a>
+        <a href="products.html" class="flex items-center h-12 px-4 text-cream-100 hover:text-gold-400 hover:bg-white/5 rounded-lg transition-colors">
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+          出品商品
+        </a>
+        <a href="transactions.html" class="flex items-center h-12 px-4 text-cream-100 hover:text-gold-400 hover:bg-white/5 rounded-lg transition-colors">
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+          取引一覧
+        </a>
+        <a href="messages.html" class="flex items-center h-12 px-4 text-cream-100 hover:text-gold-400 hover:bg-white/5 rounded-lg transition-colors">
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+          メッセージ
+          <span class="ml-auto bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">2</span>
+        </a>
+        <a href="balance.html" class="flex items-center h-12 px-4 text-cream-100 hover:text-gold-400 hover:bg-white/5 rounded-lg transition-colors">
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          売上金管理
+        </a>
+      </div>
+      <div class="border-t border-white/10 mt-6 pt-6">
+        <a href="../auth/login.html" class="flex items-center h-12 px-4 text-cream-100 hover:text-gold-400 hover:bg-white/5 rounded-lg transition-colors">
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+          ログアウト
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
     <!-- Welcome Section -->
-    <div class="mb-8">
-      <h1 class="text-2xl font-bold text-navy-800 mb-2">こんにちは、山田さん</h1>
-      <p class="text-navy-600">KAIMAXで最高値を手に入れましょう</p>
+    <div class="mb-6 sm:mb-8">
+      <h1 class="text-xl sm:text-2xl font-bold text-navy-800 mb-1 sm:mb-2">こんにちは、山田さん</h1>
+      <p class="text-navy-600 text-sm sm:text-base">KAIMAXで最高値を手に入れましょう</p>
     </div>
 
     <!-- Stats Cards -->
-    <div class="grid md:grid-cols-4 gap-6 mb-8">
-      <div class="bg-white rounded-2xl p-6 shadow-sm">
-        <div class="flex items-center justify-between mb-4">
-          <div class="w-12 h-12 bg-gold-400/20 rounded-xl flex items-center justify-center">
-            <svg class="w-6 h-6 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mb-8">
+      <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm">
+        <div class="flex items-center justify-between mb-3 sm:mb-4">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gold-400/20 rounded-xl flex items-center justify-center">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
           </div>
-          <a href="balance.html" class="text-gold-600 text-sm hover:text-gold-700">管理</a>
+          <a href="balance.html" class="text-gold-600 text-xs sm:text-sm hover:text-gold-700">管理</a>
         </div>
-        <div class="text-3xl font-bold text-navy-800">¥125,000</div>
-        <div class="text-sm text-navy-500 mt-1">売上金残高</div>
+        <div class="text-xl sm:text-3xl font-bold text-navy-800">¥125,000</div>
+        <div class="text-xs sm:text-sm text-navy-500 mt-1">売上金残高</div>
       </div>
 
-      <div class="bg-white rounded-2xl p-6 shadow-sm">
-        <div class="flex items-center justify-between mb-4">
-          <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm">
+        <div class="flex items-center justify-between mb-3 sm:mb-4">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
             </svg>
           </div>
-          <a href="products.html" class="text-gold-600 text-sm hover:text-gold-700">一覧</a>
+          <a href="products.html" class="text-gold-600 text-xs sm:text-sm hover:text-gold-700">一覧</a>
         </div>
-        <div class="text-3xl font-bold text-navy-800">3</div>
-        <div class="text-sm text-navy-500 mt-1">出品中</div>
+        <div class="text-xl sm:text-3xl font-bold text-navy-800">3</div>
+        <div class="text-xs sm:text-sm text-navy-500 mt-1">出品中</div>
       </div>
 
-      <div class="bg-white rounded-2xl p-6 shadow-sm">
-        <div class="flex items-center justify-between mb-4">
-          <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm">
+        <div class="flex items-center justify-between mb-3 sm:mb-4">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-xl flex items-center justify-center">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
             </svg>
           </div>
-          <a href="transactions.html" class="text-gold-600 text-sm hover:text-gold-700">一覧</a>
+          <a href="transactions.html" class="text-gold-600 text-xs sm:text-sm hover:text-gold-700">一覧</a>
         </div>
-        <div class="text-3xl font-bold text-navy-800">2</div>
-        <div class="text-sm text-navy-500 mt-1">取引中</div>
+        <div class="text-xl sm:text-3xl font-bold text-navy-800">2</div>
+        <div class="text-xs sm:text-sm text-navy-500 mt-1">取引中</div>
       </div>
 
-      <div class="bg-white rounded-2xl p-6 shadow-sm">
-        <div class="flex items-center justify-between mb-4">
-          <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm">
+        <div class="flex items-center justify-between mb-3 sm:mb-4">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
             </svg>
           </div>
-          <a href="messages.html" class="text-gold-600 text-sm hover:text-gold-700">一覧</a>
+          <a href="messages.html" class="text-gold-600 text-xs sm:text-sm hover:text-gold-700">一覧</a>
         </div>
-        <div class="text-3xl font-bold text-navy-800">2</div>
-        <div class="text-sm text-navy-500 mt-1">未読メッセージ</div>
+        <div class="text-xl sm:text-3xl font-bold text-navy-800">2</div>
+        <div class="text-xs sm:text-sm text-navy-500 mt-1">未読メッセージ</div>
       </div>
     </div>
 
     <!-- Quick Action -->
-    <div class="bg-gradient-to-r from-navy-800 to-navy-900 rounded-3xl p-8 mb-8 relative overflow-hidden">
+    <div class="bg-gradient-to-r from-navy-800 to-navy-900 rounded-2xl sm:rounded-3xl p-5 sm:p-8 mb-8 relative overflow-hidden">
       <div class="absolute top-0 right-0 w-64 h-64 bg-gold-500/10 rounded-full blur-3xl"></div>
-      <div class="relative flex flex-col md:flex-row items-center justify-between gap-6">
-        <div>
-          <h2 class="text-2xl font-bold text-white mb-2">商品を出品しませんか？</h2>
-          <p class="text-cream-200">写真を撮って出品するだけ。複数の質屋から入札を受けられます。</p>
+      <div class="relative flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6">
+        <div class="text-center md:text-left">
+          <h2 class="text-lg sm:text-2xl font-bold text-white mb-2">商品を出品しませんか？</h2>
+          <p class="text-cream-200 text-sm sm:text-base">写真を撮って出品するだけ。複数の質屋から入札を受けられます。</p>
         </div>
-        <a href="products-new.html" class="bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 px-8 py-4 rounded-full font-semibold hover:shadow-lg hover:shadow-gold-500/30 transition-all flex items-center gap-2 whitespace-nowrap">
+        <a href="products-new.html" class="bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:shadow-lg hover:shadow-gold-500/30 transition-all flex items-center gap-2 text-sm sm:text-base">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
           </svg>
@@ -158,37 +260,37 @@
       </div>
     </div>
 
-    <div class="grid lg:grid-cols-3 gap-8">
+    <div class="grid lg:grid-cols-3 gap-6 sm:gap-8">
       <!-- Active Listings -->
       <div class="lg:col-span-2">
-        <div class="flex items-center justify-between mb-6">
-          <h2 class="text-xl font-bold text-navy-800">出品中の商品</h2>
-          <a href="products.html" class="text-gold-600 text-sm hover:text-gold-700">すべて見る</a>
+        <div class="flex items-center justify-between mb-4 sm:mb-6">
+          <h2 class="text-lg sm:text-xl font-bold text-navy-800">出品中の商品</h2>
+          <a href="products.html" class="text-gold-600 text-xs sm:text-sm hover:text-gold-700">すべて見る</a>
         </div>
 
         <div class="space-y-4">
           <!-- Product Card 1 -->
-          <div class="bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow">
-            <div class="flex gap-4">
-              <div class="w-24 h-24 bg-cream-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                <svg class="w-10 h-10 text-navy-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="bg-white rounded-2xl p-3 sm:p-4 shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex gap-3 sm:gap-4">
+              <div class="w-20 h-20 sm:w-24 sm:h-24 bg-cream-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-8 h-8 sm:w-10 sm:h-10 text-navy-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                 </svg>
               </div>
               <div class="flex-1 min-w-0">
-                <div class="flex items-start justify-between gap-4">
+                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 sm:gap-4">
                   <div>
-                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full mb-2">入札中</span>
-                    <h3 class="font-semibold text-navy-800 truncate">ルイ・ヴィトン ネヴァーフル MM</h3>
-                    <p class="text-sm text-navy-500">ブランド品</p>
+                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full mb-1 sm:mb-2">入札中</span>
+                    <h3 class="font-semibold text-navy-800 text-sm sm:text-base truncate">ルイ・ヴィトン ネヴァーフル MM</h3>
+                    <p class="text-xs sm:text-sm text-navy-500">ブランド品</p>
                   </div>
-                  <div class="text-right">
+                  <div class="sm:text-right mt-1 sm:mt-0">
                     <div class="text-xs text-navy-500">現在の最高入札</div>
-                    <div class="text-lg font-bold text-gold-600">¥85,000</div>
+                    <div class="text-base sm:text-lg font-bold text-gold-600">¥85,000</div>
                   </div>
                 </div>
-                <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
-                  <div class="flex items-center gap-4 text-sm text-navy-500">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-gray-100 gap-2">
+                  <div class="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-navy-500">
                     <span class="flex items-center gap-1">
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
@@ -202,34 +304,34 @@
                       残り2日
                     </span>
                   </div>
-                  <a href="product-detail.html" class="text-gold-600 text-sm hover:text-gold-700 font-medium">詳細を見る</a>
+                  <a href="product-detail.html" class="text-gold-600 text-xs sm:text-sm hover:text-gold-700 font-medium">詳細を見る</a>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Product Card 2 -->
-          <div class="bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow">
-            <div class="flex gap-4">
-              <div class="w-24 h-24 bg-cream-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                <svg class="w-10 h-10 text-navy-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="bg-white rounded-2xl p-3 sm:p-4 shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex gap-3 sm:gap-4">
+              <div class="w-20 h-20 sm:w-24 sm:h-24 bg-cream-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-8 h-8 sm:w-10 sm:h-10 text-navy-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
               </div>
               <div class="flex-1 min-w-0">
-                <div class="flex items-start justify-between gap-4">
+                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 sm:gap-4">
                   <div>
-                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full mb-2">入札中</span>
-                    <h3 class="font-semibold text-navy-800 truncate">オメガ スピードマスター</h3>
-                    <p class="text-sm text-navy-500">時計</p>
+                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full mb-1 sm:mb-2">入札中</span>
+                    <h3 class="font-semibold text-navy-800 text-sm sm:text-base truncate">オメガ スピードマスター</h3>
+                    <p class="text-xs sm:text-sm text-navy-500">時計</p>
                   </div>
-                  <div class="text-right">
+                  <div class="sm:text-right mt-1 sm:mt-0">
                     <div class="text-xs text-navy-500">現在の最高入札</div>
-                    <div class="text-lg font-bold text-gold-600">¥320,000</div>
+                    <div class="text-base sm:text-lg font-bold text-gold-600">¥320,000</div>
                   </div>
                 </div>
-                <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
-                  <div class="flex items-center gap-4 text-sm text-navy-500">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-gray-100 gap-2">
+                  <div class="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-navy-500">
                     <span class="flex items-center gap-1">
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
@@ -243,34 +345,34 @@
                       残り5日
                     </span>
                   </div>
-                  <a href="product-detail.html" class="text-gold-600 text-sm hover:text-gold-700 font-medium">詳細を見る</a>
+                  <a href="product-detail.html" class="text-gold-600 text-xs sm:text-sm hover:text-gold-700 font-medium">詳細を見る</a>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Product Card 3 - Pending Approval -->
-          <div class="bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow">
-            <div class="flex gap-4">
-              <div class="w-24 h-24 bg-cream-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                <svg class="w-10 h-10 text-navy-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="bg-white rounded-2xl p-3 sm:p-4 shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex gap-3 sm:gap-4">
+              <div class="w-20 h-20 sm:w-24 sm:h-24 bg-cream-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-8 h-8 sm:w-10 sm:h-10 text-navy-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
                 </svg>
               </div>
               <div class="flex-1 min-w-0">
-                <div class="flex items-start justify-between gap-4">
+                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 sm:gap-4">
                   <div>
-                    <span class="inline-block bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full mb-2">承諾待ち</span>
-                    <h3 class="font-semibold text-navy-800 truncate">18K ダイヤモンド ネックレス</h3>
-                    <p class="text-sm text-navy-500">貴金属・宝石</p>
+                    <span class="inline-block bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full mb-1 sm:mb-2">承諾待ち</span>
+                    <h3 class="font-semibold text-navy-800 text-sm sm:text-base truncate">18K ダイヤモンド ネックレス</h3>
+                    <p class="text-xs sm:text-sm text-navy-500">貴金属・宝石</p>
                   </div>
-                  <div class="text-right">
+                  <div class="sm:text-right mt-1 sm:mt-0">
                     <div class="text-xs text-navy-500">最高入札</div>
-                    <div class="text-lg font-bold text-gold-600">¥180,000</div>
+                    <div class="text-base sm:text-lg font-bold text-gold-600">¥180,000</div>
                   </div>
                 </div>
-                <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
-                  <div class="flex items-center gap-4 text-sm text-navy-500">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-gray-100 gap-2">
+                  <div class="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-navy-500">
                     <span class="flex items-center gap-1">
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -278,7 +380,7 @@
                       承諾期限まで3日
                     </span>
                   </div>
-                  <a href="product-detail.html" class="bg-gold-500 text-navy-900 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gold-600 transition-colors">入札を確認</a>
+                  <a href="product-detail.html" class="bg-gold-500 text-navy-900 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium hover:bg-gold-600 transition-colors text-center">入札を確認</a>
                 </div>
               </div>
             </div>
@@ -287,12 +389,12 @@
       </div>
 
       <!-- Sidebar -->
-      <div class="space-y-6">
+      <div class="space-y-4 sm:space-y-6">
         <!-- Transactions -->
-        <div class="bg-white rounded-2xl p-6 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="font-bold text-navy-800">取引中</h3>
-            <a href="transactions.html" class="text-gold-600 text-sm hover:text-gold-700">すべて</a>
+        <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm">
+          <div class="flex items-center justify-between mb-3 sm:mb-4">
+            <h3 class="font-bold text-navy-800 text-sm sm:text-base">取引中</h3>
+            <a href="transactions.html" class="text-gold-600 text-xs sm:text-sm hover:text-gold-700">すべて</a>
           </div>
 
           <div class="space-y-4">
@@ -323,10 +425,10 @@
         </div>
 
         <!-- Recent Messages -->
-        <div class="bg-white rounded-2xl p-6 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="font-bold text-navy-800">メッセージ</h3>
-            <a href="messages.html" class="text-gold-600 text-sm hover:text-gold-700">すべて</a>
+        <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm">
+          <div class="flex items-center justify-between mb-3 sm:mb-4">
+            <h3 class="font-bold text-navy-800 text-sm sm:text-base">メッセージ</h3>
+            <a href="messages.html" class="text-gold-600 text-xs sm:text-sm hover:text-gold-700">すべて</a>
           </div>
 
           <div class="space-y-3">
@@ -361,8 +463,8 @@
         </div>
 
         <!-- Quick Links -->
-        <div class="bg-white rounded-2xl p-6 shadow-sm">
-          <h3 class="font-bold text-navy-800 mb-4">設定・その他</h3>
+        <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm">
+          <h3 class="font-bold text-navy-800 text-sm sm:text-base mb-3 sm:mb-4">設定・その他</h3>
           <div class="space-y-2">
             <a href="#" class="flex items-center gap-3 p-3 hover:bg-cream-50 rounded-xl transition-colors">
               <svg class="w-5 h-5 text-navy-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -393,5 +495,37 @@
       </div>
     </div>
   </main>
+
+  <!-- Mobile Menu JavaScript -->
+  <script>
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+
+    function openMobileMenu() {
+      mobileMenu.classList.add('active');
+      mobileMenuOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('active');
+      mobileMenuOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    mobileMenuBtn.addEventListener('click', openMobileMenu);
+    mobileMenuClose.addEventListener('click', closeMobileMenu);
+    mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMobileMenu();
+    });
+  </script>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>画面モック一覧 - KAIMAX</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,23 +38,36 @@
       }
     }
   </script>
+  <style>
+    :root {
+      --sat: env(safe-area-inset-top);
+      --sab: env(safe-area-inset-bottom);
+      --sal: env(safe-area-inset-left);
+      --sar: env(safe-area-inset-right);
+    }
+    .safe-top { padding-top: max(0px, var(--sat)); }
+    .safe-bottom { padding-bottom: max(0px, var(--sab)); }
+    .safe-left { padding-left: max(0px, var(--sal)); }
+    .safe-right { padding-right: max(0px, var(--sar)); }
+    .touch-target { min-height: 44px; min-width: 44px; }
+  </style>
 </head>
 <body class="font-sans bg-cream-50 text-navy-800 antialiased min-h-screen">
   <!-- Header -->
-  <header class="bg-navy-900 text-white py-8">
-    <div class="container mx-auto px-6">
+  <header class="bg-navy-900 text-white py-6 sm:py-8 safe-top">
+    <div class="container mx-auto px-4 sm:px-6">
       <div class="flex items-center gap-3 mb-4">
         <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
           <span class="font-display text-navy-900 text-xl font-bold">K</span>
         </div>
         <span class="font-display text-2xl tracking-wide">KAIMAX</span>
       </div>
-      <h1 class="text-3xl font-bold mb-2">画面モック一覧</h1>
+      <h1 class="text-2xl sm:text-3xl font-bold mb-2">画面モック一覧</h1>
       <p class="text-gray-400">オンライン質屋マッチングシステム</p>
     </div>
   </header>
 
-  <div class="container mx-auto px-6 py-12">
+  <div class="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
     <!-- 公開ページ -->
     <section class="mb-12">
       <div class="flex items-center gap-3 mb-6">
@@ -689,8 +702,8 @@
   </div>
 
   <!-- Footer -->
-  <footer class="bg-white border-t border-gray-100 py-8">
-    <div class="container mx-auto px-6 text-center">
+  <footer class="bg-white border-t border-gray-100 py-6 sm:py-8 safe-bottom">
+    <div class="container mx-auto px-4 sm:px-6 text-center">
       <p class="text-navy-500 text-sm">KAIMAX - オンライン質屋マッチングシステム 画面モック</p>
     </div>
   </footer>

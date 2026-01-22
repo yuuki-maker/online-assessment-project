@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>SEO設定 | KAIMAX Admin</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,21 +22,60 @@
       }
     }
   </script>
+  <style>
+    :root {
+      --sat: env(safe-area-inset-top);
+      --sab: env(safe-area-inset-bottom);
+    }
+    .safe-top { padding-top: max(0px, var(--sat)); }
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+    }
+    .sidebar.active {
+      transform: translateX(0);
+    }
+    .sidebar-overlay {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .sidebar-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .touch-target { min-height: 44px; min-width: 44px; }
+    @media (min-width: 1024px) {
+      .sidebar {
+        transform: translateX(0);
+      }
+    }
+  </style>
 </head>
 <body class="font-sans bg-gray-100 text-navy-800 antialiased">
+  <!-- Sidebar Overlay -->
+  <div id="sidebar-overlay" class="sidebar-overlay fixed inset-0 bg-black/50 z-40 lg:hidden"></div>
+
   <div class="flex min-h-screen">
     <!-- Sidebar -->
-    <aside class="w-64 bg-navy-900 flex-shrink-0">
+    <aside id="sidebar" class="sidebar fixed lg:static inset-y-0 left-0 w-64 bg-navy-900 flex-shrink-0 z-50 overflow-y-auto safe-top">
       <div class="p-6">
-        <a href="../public/top.html" class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
-            <span class="font-display text-navy-900 text-xl font-bold">K</span>
-          </div>
-          <div>
-            <span class="font-display text-xl text-white tracking-wide block">KAIMAX</span>
-            <span class="text-xs text-gold-400">Admin</span>
-          </div>
-        </a>
+        <div class="flex items-center justify-between">
+          <a href="../public/top.html" class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+              <span class="font-display text-navy-900 text-xl font-bold">K</span>
+            </div>
+            <div>
+              <span class="font-display text-xl text-white tracking-wide block">KAIMAX</span>
+              <span class="text-xs text-gold-400">Admin</span>
+            </div>
+          </a>
+          <button id="sidebar-close" class="lg:hidden w-10 h-10 flex items-center justify-center text-cream-100 hover:text-gold-400 transition-colors touch-target" aria-label="メニューを閉じる">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
       </div>
       <nav class="px-4 py-6 space-y-1">
         <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream-200 hover:bg-white/5">
@@ -55,13 +94,18 @@
 
     <!-- Main Content -->
     <div class="flex-1 flex flex-col">
-      <header class="bg-white border-b border-gray-200 px-8 py-4">
+      <header class="bg-white border-b border-gray-200 px-4 lg:px-8 py-4">
         <div class="flex items-center justify-between">
-          <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2 lg:gap-4">
+            <button id="sidebar-toggle" class="lg:hidden w-10 h-10 flex items-center justify-center text-navy-600 hover:text-gold-600 transition-colors touch-target" aria-label="メニューを開く">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+            </button>
             <a href="settings.html" class="text-navy-500 hover:text-navy-700">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
             </a>
-            <h1 class="text-xl font-bold text-navy-800">SEO設定</h1>
+            <h1 class="text-lg lg:text-xl font-bold text-navy-800">SEO設定</h1>
           </div>
           <div class="flex items-center gap-4">
             <div class="w-10 h-10 rounded-full bg-navy-800 flex items-center justify-center">
@@ -71,7 +115,7 @@
         </div>
       </header>
 
-      <main class="flex-1 p-8 overflow-auto">
+      <main class="flex-1 p-4 lg:p-8 overflow-auto">
         <!-- Settings Navigation -->
         <div class="bg-white rounded-2xl shadow-sm mb-6">
           <div class="flex border-b border-gray-100">
@@ -82,7 +126,7 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <!-- Global Meta Tags -->
           <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
             <div class="p-6 border-b border-gray-100">
@@ -262,5 +306,39 @@ Sitemap: https://kaimax.jp/sitemap.xml</textarea>
       </main>
     </div>
   </div>
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const sidebarClose = document.getElementById('sidebar-close');
+
+    function openSidebar() {
+      sidebar.classList.add('active');
+      sidebarOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar() {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    sidebarToggle.addEventListener('click', openSidebar);
+    sidebarClose.addEventListener('click', closeSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+
+    sidebar.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 1024) {
+          closeSidebar();
+        }
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeSidebar();
+    });
+  </script>
 </body>
 </html>

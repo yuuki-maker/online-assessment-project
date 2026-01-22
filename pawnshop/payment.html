@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>お支払い | KAIMAX 質屋</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,23 +38,52 @@
       }
     }
   </script>
+  <style>
+    :root {
+      --sat: env(safe-area-inset-top);
+      --sab: env(safe-area-inset-bottom);
+    }
+    .safe-top { padding-top: max(1rem, var(--sat)); }
+    .safe-bottom { padding-bottom: max(1rem, var(--sab)); }
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+    }
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
+    .mobile-menu-overlay {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .touch-target { min-height: 44px; min-width: 44px; }
+    .pb-bottom-nav { padding-bottom: calc(5rem + var(--sab, 0px)); }
+    @media (min-width: 768px) {
+      .pb-bottom-nav { padding-bottom: 2rem; }
+    }
+  </style>
 </head>
 <body class="font-sans bg-cream-50 text-navy-800 antialiased">
   <!-- Header -->
-  <header class="bg-navy-900 border-b border-gold-500/20">
-    <nav class="max-w-7xl mx-auto px-6 py-4">
+  <header class="bg-navy-900 border-b border-gold-500/20 safe-top">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
       <div class="flex items-center justify-between">
-        <a href="../public/top.html" class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
-            <span class="font-display text-navy-900 text-xl font-bold">K</span>
+        <a href="../public/top.html" class="flex items-center gap-2 sm:gap-3">
+          <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+            <span class="font-display text-navy-900 text-lg sm:text-xl font-bold">K</span>
           </div>
-          <span class="font-display text-2xl text-white tracking-wide">KAIMAX</span>
-          <span class="text-xs text-cream-300 bg-white/10 px-2 py-1 rounded">質屋</span>
+          <span class="font-display text-xl sm:text-2xl text-white tracking-wide">KAIMAX</span>
+          <span class="text-xs text-cream-300 bg-white/10 px-2 py-1 rounded hidden sm:inline">質屋</span>
         </a>
 
         <div class="flex items-center gap-2">
-          <div class="w-10 h-10 rounded-full bg-navy-700 flex items-center justify-center">
-            <span class="text-gold-400 font-semibold">鈴</span>
+          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-navy-700 flex items-center justify-center">
+            <span class="text-gold-400 font-semibold text-sm sm:text-base">鈴</span>
           </div>
           <span class="text-cream-100 text-sm hidden md:block">鈴木質店</span>
         </div>
@@ -62,7 +91,7 @@
     </nav>
   </header>
 
-  <main class="max-w-3xl mx-auto px-6 py-8">
+  <main class="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-bottom-nav">
     <!-- Breadcrumb -->
     <nav class="flex items-center gap-2 text-sm text-navy-500 mb-6">
       <a href="transactions.html" class="hover:text-gold-600">取引一覧</a>

@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>商品を出品 | KAIMAX</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,17 +38,57 @@
       }
     }
   </script>
+  <style>
+    :root {
+      --sat: env(safe-area-inset-top);
+      --sab: env(safe-area-inset-bottom);
+    }
+    .safe-top { padding-top: max(1rem, var(--sat)); }
+    .safe-bottom { padding-bottom: max(1rem, var(--sab)); }
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+    }
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
+    .mobile-menu-overlay {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .touch-target { min-height: 44px; min-width: 44px; }
+    .pb-bottom-nav { padding-bottom: calc(5rem + var(--sab, 0px)); }
+    @media (min-width: 768px) {
+      .pb-bottom-nav { padding-bottom: 2rem; }
+    }
+    /* iOS Safari fixed bottom nav */
+    .bottom-nav-fixed {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding-bottom: var(--sab, 0px);
+      /* Prevent shifting on iOS Safari scroll */
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+    }
+  </style>
 </head>
 <body class="font-sans bg-cream-50 text-navy-800 antialiased">
   <!-- Header -->
-  <header class="bg-navy-900 border-b border-gold-500/20">
-    <nav class="max-w-7xl mx-auto px-6 py-4">
+  <header class="bg-navy-900 border-b border-gold-500/20 safe-top">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
       <div class="flex items-center justify-between">
-        <a href="../public/top.html" class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
-            <span class="font-display text-navy-900 text-xl font-bold">K</span>
+        <a href="../public/top.html" class="flex items-center gap-2 sm:gap-3">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center">
+            <span class="font-display text-navy-900 text-lg sm:text-xl font-bold">K</span>
           </div>
-          <span class="font-display text-2xl text-white tracking-wide">KAIMAX</span>
+          <span class="font-display text-xl sm:text-2xl text-white tracking-wide">KAIMAX</span>
         </a>
 
         <div class="hidden md:flex items-center gap-8">
@@ -62,18 +102,78 @@
           </a>
         </div>
 
-        <div class="flex items-center gap-4">
-          <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 sm:gap-4">
+          <div class="hidden sm:flex items-center gap-2">
             <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center">
               <span class="text-navy-900 font-semibold">山</span>
             </div>
           </div>
+          <button id="mobile-menu-btn" class="md:hidden flex items-center justify-center w-10 h-10 touch-target text-cream-100 hover:text-gold-400 transition-colors" aria-label="メニューを開く">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
         </div>
       </div>
     </nav>
   </header>
 
-  <main class="max-w-4xl mx-auto px-6 py-8">
+  <!-- Mobile Menu Overlay -->
+  <div id="mobile-menu-overlay" class="mobile-menu-overlay fixed inset-0 bg-black/50 z-50 md:hidden"></div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-navy-900 z-50 md:hidden overflow-y-auto">
+    <div class="p-4 safe-top">
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center">
+            <span class="text-navy-900 font-semibold">山</span>
+          </div>
+          <span class="text-cream-100">山田太郎</span>
+        </div>
+        <button id="mobile-menu-close" class="flex items-center justify-center w-10 h-10 touch-target text-cream-100 hover:text-gold-400 transition-colors" aria-label="メニューを閉じる">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="space-y-1">
+        <a href="mypage.html" class="flex items-center h-12 px-4 text-cream-100 hover:text-gold-400 hover:bg-white/5 rounded-lg transition-colors">
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          マイページ
+        </a>
+        <a href="products-new.html" class="flex items-center h-12 px-4 text-gold-400 bg-white/5 rounded-lg">
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+          出品する
+        </a>
+        <a href="products.html" class="flex items-center h-12 px-4 text-cream-100 hover:text-gold-400 hover:bg-white/5 rounded-lg transition-colors">
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+          出品商品
+        </a>
+        <a href="transactions.html" class="flex items-center h-12 px-4 text-cream-100 hover:text-gold-400 hover:bg-white/5 rounded-lg transition-colors">
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+          取引一覧
+        </a>
+        <a href="messages.html" class="flex items-center h-12 px-4 text-cream-100 hover:text-gold-400 hover:bg-white/5 rounded-lg transition-colors">
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+          メッセージ
+          <span class="ml-auto bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">2</span>
+        </a>
+        <a href="balance.html" class="flex items-center h-12 px-4 text-cream-100 hover:text-gold-400 hover:bg-white/5 rounded-lg transition-colors">
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          売上金管理
+        </a>
+      </div>
+      <div class="border-t border-white/10 mt-6 pt-6">
+        <a href="../auth/login.html" class="flex items-center h-12 px-4 text-cream-100 hover:text-gold-400 hover:bg-white/5 rounded-lg transition-colors">
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+          ログアウト
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
     <!-- Header -->
     <div class="mb-8">
       <a href="mypage.html" class="inline-flex items-center gap-2 text-navy-500 hover:text-navy-700 transition-colors mb-4">
@@ -304,5 +404,37 @@
       </div>
     </form>
   </main>
+
+  <!-- Mobile Menu JavaScript -->
+  <script>
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+
+    function openMobileMenu() {
+      mobileMenu.classList.add('active');
+      mobileMenuOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('active');
+      mobileMenuOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    mobileMenuBtn.addEventListener('click', openMobileMenu);
+    mobileMenuClose.addEventListener('click', closeMobileMenu);
+    mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMobileMenu();
+    });
+  </script>
 </body>
 </html>
